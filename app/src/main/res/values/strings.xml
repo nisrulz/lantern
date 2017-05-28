@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">LanternProject</string>
+  <string name="off">Off</string>
+  <string name="on">On</string>
 </resources>

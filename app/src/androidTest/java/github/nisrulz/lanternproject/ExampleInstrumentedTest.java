@@ -1,4 +1,4 @@
-package nisrulz.github.lanternproject;
+package github.nisrulz.lanternproject;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

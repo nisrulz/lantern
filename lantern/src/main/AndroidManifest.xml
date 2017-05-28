@@ -1,8 +1,4 @@
-<manifest
-    package="nisrulz.github.lantern">
+<manifest package="github.nisrulz.lantern">
 
-  <application>
-
-  </application>
-
+  <application/>
 </manifest>

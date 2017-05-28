@@ -9,7 +9,7 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Off"/>
+      android:text="@string/off"/>
 
   <Switch
       android:id="@+id/switch_flash"
@@ -19,7 +19,7 @@
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="On"/>
+      android:text="@string/on"/>
 
 
 </LinearLayout>

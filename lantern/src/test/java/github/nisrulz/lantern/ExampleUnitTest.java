@@ -1,4 +1,4 @@
-package nisrulz.github.lanternproject;
+package github.nisrulz.lantern;
 
 import org.junit.Test;
 

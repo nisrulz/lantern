@@ -1,11 +1,11 @@
-package nisrulz.github.lanternproject;
+package github.nisrulz.lanternproject;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import nisrulz.github.lantern.Lantern;
+import github.nisrulz.lantern.Lantern;
 
 public class MainActivity extends AppCompatActivity {
 

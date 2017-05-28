@@ -1,10 +1,11 @@
-package nisrulz.github.lantern;
+package github.nisrulz.lantern;
 
 import android.hardware.Camera;
 
+@SuppressWarnings("deprecation")
 class PreLollipop {
 
-  private Camera camera;
+  private final Camera camera;
 
   public PreLollipop() {
     camera = Camera.open();
@@ -19,9 +20,6 @@ class PreLollipop {
         camera.setParameters(params);
         camera.startPreview();
       }
-      else {
-        return;
-      }
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -35,9 +33,6 @@ class PreLollipop {
         camera.setParameters(p);
         camera.stopPreview();
         camera.release();
-      }
-      else {
-        return;
       }
     } catch (Exception e) {
       e.printStackTrace();

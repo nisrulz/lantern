@@ -1,4 +1,4 @@
-package nisrulz.github.lantern;
+package github.nisrulz.lantern;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,8 +15,8 @@ import android.view.WindowManager;
 public class Lantern {
 
   private boolean isFlashOn = false;
-  PostLollipop postLollipop;
-  PreLollipop preLollipop;
+  private PostLollipop postLollipop;
+  private PreLollipop preLollipop;
 
   private Lantern() {
   }

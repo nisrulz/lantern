@@ -1,4 +1,4 @@
-package nisrulz.github.lantern;
+package github.nisrulz.lantern;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.hardware.camera2.CameraManager;
 import android.os.Build;
 
 class PostLollipop {
-  private CameraManager mCameraManager;
+  private final CameraManager mCameraManager;
   private String mCameraId;
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
