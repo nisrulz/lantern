@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     Lantern.getInstance().init(this);
 
+    ScreenUtils.checkSystemWritePermission(this);
+
     toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

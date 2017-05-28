@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 
 public class Lantern {
 
@@ -65,8 +64,7 @@ public class Lantern {
   }
 
   private boolean checkPermissions(Context context, String permission) {
-    return ContextCompat.checkSelfPermission(context, permission)
-        == PackageManager.PERMISSION_GRANTED;
+    return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
   }
 
   // Method : Check if the device has a Flash as hardware or not
