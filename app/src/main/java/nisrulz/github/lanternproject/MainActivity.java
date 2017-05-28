@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import nisrulz.github.lantern.Lantern;
-import nisrulz.github.lantern.ScreenUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,19 +18,23 @@ public class MainActivity extends AppCompatActivity {
 
     Lantern.getInstance().init(this);
 
-    ScreenUtils.checkSystemWritePermission(this);
+    // Check for permission
+    boolean hasSystemWritePermission = Lantern.getInstance().checkSystemWritePermission(this);
+    // Request for permission if not yet granted
+    if (!hasSystemWritePermission) {
+      Lantern.getInstance().requestSystemWritePermission(this);
+    }
 
     toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
       @Override
       public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (b) {
           // true
-          Lantern.getInstance().turnOn();
-          ScreenUtils.goFullBright(MainActivity.this);
+          Lantern.getInstance().turnOnFlashlight();
         }
         else {
           //false
-          Lantern.getInstance().turnOff();
+          Lantern.getInstance().turnOffFlashlight();
         }
       }
     });
