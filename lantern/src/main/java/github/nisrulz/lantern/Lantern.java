@@ -116,12 +116,12 @@ public class Lantern {
     return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP;
   }
 
-  private boolean checkPermissions(Context context, String permission) {
+  public boolean checkPermissions(Context context, String permission) {
     return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
   }
 
   // Method : Check if the device has a Flash as hardware or not
-  private boolean checkFeature(Context context, String feature) {
+  public boolean checkFeature(Context context, String feature) {
     return context.getPackageManager().hasSystemFeature(feature);
   }
 }
