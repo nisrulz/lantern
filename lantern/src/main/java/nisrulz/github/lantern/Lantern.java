@@ -11,7 +11,6 @@ public class Lantern {
   private boolean isFlashOn = false;
   PostLollipop postLollipop;
   PreLollipop preLollipop;
-  ScreenUtils screenUtils;
 
   private Lantern() {
   }
@@ -36,20 +35,26 @@ public class Lantern {
   }
 
   public void turnOn() {
-    if (isLollipopAndAbove()) {
-      postLollipop.turnOn();
-    }
-    else {
-      preLollipop.turnOn();
+    if (!isFlashOn) {
+      if (isLollipopAndAbove()) {
+        postLollipop.turnOn();
+      }
+      else {
+        preLollipop.turnOn();
+      }
+      isFlashOn = true;
     }
   }
 
   public void turnOff() {
-    if (isLollipopAndAbove()) {
-      postLollipop.turnOff();
-    }
-    else {
-      preLollipop.turnOff();
+    if (isFlashOn) {
+      if (isLollipopAndAbove()) {
+        postLollipop.turnOff();
+      }
+      else {
+        preLollipop.turnOff();
+      }
+      isFlashOn = false;
     }
   }
 
