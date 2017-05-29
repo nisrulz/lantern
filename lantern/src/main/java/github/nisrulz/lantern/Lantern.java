@@ -31,9 +31,9 @@ public class Lantern {
 
   //---------------------** Flashlight Utilities **---------------------//
 
+  @RequiresPermission(Manifest.permission.CAMERA)
   public void init(Context context) {
-    if (checkFeature(context, PackageManager.FEATURE_CAMERA_FLASH) && checkPermissions(context,
-        Manifest.permission.CAMERA)) {
+    if (checkIfCameraFeatureExists(context)) {
       if (isLollipopAndAbove()) {
         postLollipop = new PostLollipop(context);
       }
@@ -43,8 +43,8 @@ public class Lantern {
     }
   }
 
-  public void turnOnFlashlight() {
-    if (!isFlashOn) {
+  public void turnOnFlashlight(Context context) {
+    if (!isFlashOn && checkForCameraPermission(context)) {
       if (isLollipopAndAbove()) {
         postLollipop.turnOn();
       }
@@ -55,8 +55,8 @@ public class Lantern {
     }
   }
 
-  public void turnOffFlashlight() {
-    if (isFlashOn) {
+  public void turnOffFlashlight(Context context) {
+    if (isFlashOn && checkForCameraPermission(context)) {
       if (isLollipopAndAbove()) {
         postLollipop.turnOff();
       }
@@ -116,12 +116,13 @@ public class Lantern {
     return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP;
   }
 
-  public boolean checkPermissions(Context context, String permission) {
-    return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+  private boolean checkForCameraPermission(Context context) {
+    return context.checkCallingOrSelfPermission(Manifest.permission.CAMERA)
+        == PackageManager.PERMISSION_GRANTED;
   }
 
   // Method : Check if the device has a Flash as hardware or not
-  public boolean checkFeature(Context context, String feature) {
-    return context.getPackageManager().hasSystemFeature(feature);
+  private boolean checkIfCameraFeatureExists(Context context) {
+    return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
   }
 }
