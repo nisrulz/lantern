@@ -22,78 +22,82 @@ where `{latest version}` corresponds to published version in [ ![Download](https
 
 1. Declare permissions in your app's `AndroidManifest.xml` file
 
-  ```xml
-  <!-- Permissions : Allows access to flashlight -->
-  <uses-permission android:name="android.permission.CAMERA"/>
-  <uses-permission android:name="android.permission.FLASHLIGHT"/>
-  ```
+    ```xml
+    <!-- Permissions : Allows access to flashlight -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    ```
 
 1. Init code.
+   
    > Make sure you have checked for `Manifest.permission.Camera` permission first
 
-  ```java
-  Lantern.getInstance().init(context);
-  ```
+    ```java
+    Lantern.getInstance().init(context);
+    ```
 1. Manage states via
-  + Turn On
+  
+    + Turn On
 
-    ```java
-    Lantern.getInstance().turnOnFlashlight(context);
-    ```
-  + Turn Off
+        ```java
+        Lantern.getInstance().turnOnFlashlight(context);
+        ```
+    + Turn Off
 
-    ```java
-    Lantern.getInstance().turnOffFlashlight(context);
-    ```
+        ```java
+        Lantern.getInstance().turnOffFlashlight(context);
+        ```
 
 ### Handling Display/Screen states
 
 1. Declare permissions in your app's `AndroidManifest.xml` file
 
-  ```xml
-  <!-- Permissions : Allows access to change settings -->
-  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-  ```
+    ```xml
+    <!-- Permissions : Allows access to change settings -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    ```
 
-+ Enable: Keep display on
+1. Keep screen on
+  
+    + Enable: Keep display on
 
-  ```java
-  Lantern.getInstance().keepDisplayOn(activity)
-  ```
+        ```java
+        Lantern.getInstance().keepDisplayOn(activity)
+        ```
 
-+ Disable: Keep display on
+    + Disable: Keep display on
 
-  ```java
-  Lantern.getInstance().clearKeepDisplayOn(activity)
-  ```
+        ```java
+        Lantern.getInstance().clearKeepDisplayOn(activity)
+        ```
 
 ### Below requires that you have permission to write to system settings.
 1. Make use of helper functions
 
-  + Check if the permission to write to system settings is granted or not
+    + Check if the permission to write to system settings is granted or not
 
-    ```java
-    Lantern.getInstance().checkSystemWritePermission(activity)
-    ```
-  + If not granted, request for the same
+        ```java
+        Lantern.getInstance().checkSystemWritePermission(activity)
+        ```
+    + If not granted, request for the same
 
-    ```java
-    Lantern.getInstance().requestSystemWritePermission(activity)
-    ```
+        ```java
+        Lantern.getInstance().requestSystemWritePermission(activity)
+        ```
 
-2. Handle states
+1. Handle states
 
-  + Set display/screen to full bright state
+    + Set display/screen to full bright state
 
-    ```java
-    Lantern.getInstance().setDisplayToFullBright(activity)
-    ```
+        ```java
+        Lantern.getInstance().setDisplayToFullBright(activity)
+        ```
 
-  + Reset display/screen to auto-bright state
+    + Reset display/screen to auto-bright state
 
-    ```java
-    Lantern.getInstance().resetDisplayToAutoBright(activity)
-    ```
+        ```java
+        Lantern.getInstance().resetDisplayToAutoBright(activity)
+        ```
 
 
 # Pull Requests
