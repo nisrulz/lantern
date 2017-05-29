@@ -16,6 +16,71 @@ compile 'com.github.nisrulz:lantern:{latest version}'
 ```
 where `{latest version}` corresponds to published version in [ ![Download](https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg) ](https://bintray.com/nisrulz/maven/com.github.nisrulz%3Alantern/_latestVersion)
 
+# Usage
+
+### Handling Flashlight states
+
+1. Init code.
+   > Make sure you have checked for `Manifest.permission.Camera` permission first
+
+  ```java
+  Lantern.getInstance().init(context);
+  ```
+1. Manage states via
+  + Turn On
+
+    ```java
+    Lantern.getInstance().turnOnFlashlight(context);
+    ```
+  + Turn Off
+
+    ```java
+    Lantern.getInstance().turnOffFlashlight(context);
+    ```
+
+### Handling Display/Screen states
+
++ Enable: Keep display on
+
+  ```java
+  Lantern.getInstance().keepDisplayOn(activity)
+  ```
+
++ Disable: Keep display on
+
+  ```java
+  Lantern.getInstance().clearKeepDisplayOn(activity)
+  ```
+
+### Below requires that you have permission to write to system settings.
+1. Make use of helper functions
+
+  + Check if the permission to write to system settings is granted or not
+
+    ```java
+    Lantern.getInstance().checkSystemWritePermission(activity)
+    ```
+  + If not granted, request for the same
+
+    ```java
+    Lantern.getInstance().requestSystemWritePermission(activity)
+    ```
+
+2. Handle states
+
+  + Set display/screen to full bright state
+
+    ```java
+    Lantern.getInstance().setDisplayToFullBright(activity)
+    ```
+
+  + Reset display/screen to auto-bright state
+
+    ```java
+    Lantern.getInstance().resetDisplayToAutoBright(activity)
+    ```
+
+
 # Pull Requests
 I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request. Here are some basic rules to follow to ensure timely addition of your request:
   1. Match coding style (braces, spacing, etc.) This is best achieved using `CMD`+`Option`+`L` (Reformat code) on Mac (not sure for Windows) with Android Studio defaults.
