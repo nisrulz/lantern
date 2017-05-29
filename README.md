@@ -20,6 +20,14 @@ where `{latest version}` corresponds to published version in [ ![Download](https
 
 ### Handling Flashlight states
 
+1. Declare permissions in your app's `AndroidManifest.xml` file
+
+  ```xml
+  <!-- Permissions : Allows access to flashlight -->
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.FLASHLIGHT"/>
+  ```
+
 1. Init code.
    > Make sure you have checked for `Manifest.permission.Camera` permission first
 
@@ -39,6 +47,13 @@ where `{latest version}` corresponds to published version in [ ![Download](https
     ```
 
 ### Handling Display/Screen states
+
+1. Declare permissions in your app's `AndroidManifest.xml` file
+
+  ```xml
+  <!-- Permissions : Allows access to change settings -->
+  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+  ```
 
 + Enable: Keep display on
 

@@ -20,7 +20,7 @@
     package="github.nisrulz.lanternproject">
 
 
-  <!-- Permissions : Allows access to the flashlight -->
+  <!-- Permissions : Allows access to flashlight -->
   <uses-permission android:name="android.permission.CAMERA"/>
   <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
