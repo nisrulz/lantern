@@ -48,8 +48,8 @@ ext {
   supportLibVersion = '25.3.1'
 
   // Library Info
-  libVersionCode = 1
-  libVersionName = '1.0.0'
+  libVersionCode = 2
+  libVersionName = '1.1.0'
   libPomUrl = 'https://github.com/nisrulz/lantern'
   libGithubRepo = 'nisrulz/lantern'
 
