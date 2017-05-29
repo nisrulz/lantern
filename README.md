@@ -1,7 +1,7 @@
 # Lantern
 
 ### Specs
-[ ![Download](https://api.bintray.com/packages/nisrulz/maven/lantern/images/download.svg) ](https://bintray.com/nisrulz/maven/lantern/_latestVersion)[![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14)
+[ ![Download](https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg) ](https://bintray.com/nisrulz/maven/com.github.nisrulz%3Alantern/_latestVersion) [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat)](https://android-arsenal.com/api?level=14)
 
 ### Show some :heart:
 [![GitHub stars](https://img.shields.io/github/stars/nisrulz/lantern.svg?style=social&label=Star)](https://github.com/nisrulz/lantern) [![GitHub forks](https://img.shields.io/github/forks/nisrulz/lantern.svg?style=social&label=Fork)](https://github.com/nisrulz/lantern/fork) [![GitHub watchers](https://img.shields.io/github/watchers/nisrulz/lantern.svg?style=social&label=Watch)](https://github.com/nisrulz/lantern) [![GitHub followers](https://img.shields.io/github/followers/nisrulz.svg?style=social&label=Follow)](https://github.com/nisrulz/lantern)  
@@ -14,7 +14,7 @@ Lantern is available in the Jcenter, so getting it as simple as adding it as a d
 ```gradle
 compile 'com.github.nisrulz:lantern:{latest version}'
 ```
-where `{latest version}` corresponds to published version in [ ![Download](https://api.bintray.com/packages/nisrulz/maven/lantern/images/download.svg) ](https://bintray.com/nisrulz/maven/lantern/_latestVersion)
+where `{latest version}` corresponds to published version in [ ![Download](https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg) ](https://bintray.com/nisrulz/maven/com.github.nisrulz%3Alantern/_latestVersion)
 
 # Usage
 
