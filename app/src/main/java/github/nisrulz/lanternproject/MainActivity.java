@@ -1,6 +1,5 @@
 package github.nisrulz.lanternproject;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     Switch toggle = (Switch) findViewById(R.id.switch_flash);
 
-    if (Lantern.getInstance().checkPermissions(this, Manifest.permission.CAMERA)) {
-      Lantern.getInstance().init(this);
-    }
+    Lantern.getInstance().init(this);
 
     // Check for permission
     boolean hasSystemWritePermission = Lantern.getInstance().checkSystemWritePermission(this);

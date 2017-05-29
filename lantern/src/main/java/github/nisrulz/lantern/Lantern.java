@@ -31,15 +31,15 @@ public class Lantern {
 
   //---------------------** Flashlight Utilities **---------------------//
 
-  @RequiresPermission(Manifest.permission.CAMERA)
   public void init(Context context) {
-    if (isLollipopAndAbove()
-        && checkFeature(context, PackageManager.FEATURE_CAMERA_FLASH)
-        && checkPermissions(context, Manifest.permission.CAMERA)) {
-      postLollipop = new PostLollipop(context);
-    }
-    else {
-      preLollipop = new PreLollipop();
+    if (checkFeature(context, PackageManager.FEATURE_CAMERA_FLASH) && checkPermissions(context,
+        Manifest.permission.CAMERA)) {
+      if (isLollipopAndAbove()) {
+        postLollipop = new PostLollipop(context);
+      }
+      else {
+        preLollipop = new PreLollipop();
+      }
     }
   }
 
