@@ -93,21 +93,23 @@ public class Lantern {
     activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   }
 
-  @RequiresPermission(Manifest.permission.WRITE_SETTINGS)
   public void setDisplayToFullBright(Activity activity) {
-    Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-        Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+    if (checkSystemWritePermission(activity)) {
+      Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+          Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-    Window window = activity.getWindow();
-    WindowManager.LayoutParams layoutParams = window.getAttributes();
-    layoutParams.screenBrightness = 100 / 100.0f;
-    window.setAttributes(layoutParams);
+      Window window = activity.getWindow();
+      WindowManager.LayoutParams layoutParams = window.getAttributes();
+      layoutParams.screenBrightness = 100 / 100.0f;
+      window.setAttributes(layoutParams);
+    }
   }
 
-  @RequiresPermission(Manifest.permission.WRITE_SETTINGS)
   public void resetDisplayToAutoBright(Activity activity) {
-    Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-        Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+    if (checkSystemWritePermission(activity)) {
+      Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+          Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+    }
   }
 
   public boolean checkSystemWritePermission(Activity activity) {

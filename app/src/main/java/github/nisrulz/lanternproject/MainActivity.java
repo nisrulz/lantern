@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Check for permission
-    boolean hasSystemWritePermission = Lantern.getInstance().checkSystemWritePermission(this);
+    final boolean hasSystemWritePermission = Lantern.getInstance().checkSystemWritePermission(this);
     // Request for permission if not yet granted
     if (!hasSystemWritePermission) {
       Lantern.getInstance().requestSystemWritePermission(this);
