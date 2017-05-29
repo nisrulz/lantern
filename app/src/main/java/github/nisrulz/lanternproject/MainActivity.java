@@ -62,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
         if (b) {
           // true
           Lantern.getInstance().turnOnFlashlight(MainActivity.this);
+          Lantern.getInstance().setDisplayToFullBright(MainActivity.this);
         }
         else {
           //false
           Lantern.getInstance().turnOffFlashlight(MainActivity.this);
+          Lantern.getInstance().resetDisplayToAutoBright(MainActivity.this);
         }
       }
     });
