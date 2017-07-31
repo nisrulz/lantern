@@ -38,10 +38,11 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
+
+  // Testing-only dependencies
   testCompile 'junit:junit:4.12'
+  androidTestCompile 'com.android.support.test:runner:1.0.0'
+  androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
 
   compile "com.android.support:support-annotations:$rootProject.ext.supportLibVersion"
 }
