@@ -156,4 +156,8 @@ public class Lantern implements LifecycleObserver {
         this.pulseTime = TimeUnit.MILLISECONDS.convert(time, timeUnit);
         return this;
     }
+    
+    public boolean isTorchOn() {
+        return isFlashOn;
+    }
 }
