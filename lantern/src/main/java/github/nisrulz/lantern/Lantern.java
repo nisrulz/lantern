@@ -31,8 +31,8 @@ import android.view.WindowManager;
 public class Lantern {
 
   private boolean isFlashOn = false;
-  private PostLollipop postLollipop;
-  private PreLollipop preLollipop;
+  private PostMarshmallow postMarshmallow;
+  private PreMarshmallow preMarshmallow;
 
   private Lantern() {
   }
@@ -50,22 +50,20 @@ public class Lantern {
   @RequiresPermission(Manifest.permission.CAMERA)
   public void init(Context context) {
     if (checkIfCameraFeatureExists(context)) {
-      if (isLollipopAndAbove()) {
-        postLollipop = new PostLollipop(context);
-      }
-      else {
-        preLollipop = new PreLollipop();
+      if (isMarshmallowAndAbove()) {
+        postMarshmallow = new PostMarshmallow(context);
+      } else {
+        preMarshmallow = new PreMarshmallow();
       }
     }
   }
 
   public void turnOnFlashlight(Context context) {
     if (!isFlashOn && checkForCameraPermission(context)) {
-      if (isLollipopAndAbove()) {
-        postLollipop.turnOn();
-      }
-      else {
-        preLollipop.turnOn();
+      if (isMarshmallowAndAbove()) {
+        postMarshmallow.turnOn();
+      } else {
+        preMarshmallow.turnOn();
       }
       isFlashOn = true;
     }
@@ -73,11 +71,10 @@ public class Lantern {
 
   public void turnOffFlashlight(Context context) {
     if (isFlashOn && checkForCameraPermission(context)) {
-      if (isLollipopAndAbove()) {
-        postLollipop.turnOff();
-      }
-      else {
-        preLollipop.turnOff();
+      if (isMarshmallowAndAbove()) {
+        postMarshmallow.turnOff();
+      } else {
+        preMarshmallow.turnOff();
       }
       isFlashOn = false;
     }
@@ -130,8 +127,8 @@ public class Lantern {
 
   //---------------------** Misc Utilities **---------------------//
 
-  private boolean isLollipopAndAbove() {
-    return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP;
+  private boolean isMarshmallowAndAbove() {
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
   }
 
   private boolean checkForCameraPermission(Context context) {

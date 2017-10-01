@@ -16,40 +16,40 @@
 
 package github.nisrulz.lantern;
 
-import android.hardware.Camera;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+import android.os.Build;
 
-@SuppressWarnings("deprecation")
-class PreLollipop {
+class PostMarshmallow {
+  private final CameraManager mCameraManager;
+  private String mCameraId;
 
-  private final Camera camera;
-
-  public PreLollipop() {
-    camera = Camera.open();
-  }
-
-  void turnOn() {
+  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+  public PostMarshmallow(Context context) {
+    mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
     try {
 
-      if (camera != null) {
-        Camera.Parameters params = camera.getParameters();
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-      }
+      mCameraId = mCameraManager.getCameraIdList()[0];
+    } catch (CameraAccessException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @TargetApi(Build.VERSION_CODES.M)
+  void turnOn() {
+    try {
+      mCameraManager.setTorchMode(mCameraId, true);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
+  @TargetApi(Build.VERSION_CODES.M)
   void turnOff() {
     try {
-      if (camera != null) {
-        Camera.Parameters p = camera.getParameters();
-        p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        camera.setParameters(p);
-        camera.stopPreview();
-        camera.release();
-      }
+      mCameraManager.setTorchMode(mCameraId, false);
     } catch (Exception e) {
       e.printStackTrace();
     }
