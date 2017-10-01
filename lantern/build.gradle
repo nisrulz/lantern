@@ -44,7 +44,7 @@ dependencies {
   androidTestCompile 'com.android.support.test:runner:1.0.0'
   androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
 
-  compile "com.android.support:support-annotations:$rootProject.ext.supportLibVersion"
+  implementation "com.android.support:support-annotations:$rootProject.ext.supportLibVersion"
 }
 
 apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/nishant-config.gradle'
