@@ -12,8 +12,8 @@
         <img src="https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg"/>
     </a>
     <!-- API -->
-    <a href="https://android-arsenal.com/api?level=9">
-        <img src="https://img.shields.io/badge/API-9%2B-orange.svg?style=flat"/>
+    <a href="https://android-arsenal.com/api?level=14">
+        <img src="https://img.shields.io/badge/API-14%2B-orange.svg?style=flat"/>
     </a>
     <!-- Android Arsenal -->
     <a href="https://android-arsenal.com/details/1/5816">
