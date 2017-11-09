@@ -37,10 +37,10 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   // Testing-only dependencies
-  testCompile 'junit:junit:4.12'
+  testImplementation 'junit:junit:4.12'
   androidTestCompile 'com.android.support.test:runner:1.0.0'
   androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.0'
 
