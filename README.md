@@ -1,4 +1,4 @@
-<h1 align="center">Lantern&nbsp;<a href="https://twitter.com/intent/tweet?text=CCheckout%20Lantern%3A%20Android%20library%20handling%20flashlight%20for%20camera%20and%20camera2%20api%20%F0%9F%98%8E&via=nisrulz&hashtags=AndroidDev,android,library,OpenSource">
+<h1 align="center">Lantern&nbsp;<a href="https://twitter.com/intent/tweet?text=Checkout%20Lantern%3A%20Android%20library%20handling%20flashlight%20for%20camera%20and%20camera2%20api%20%F0%9F%98%8E&via=nisrulz&hashtags=AndroidDev,android,library,OpenSource">
         <img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social"/>
     </a></h1>
 
