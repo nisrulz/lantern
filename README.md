@@ -62,7 +62,7 @@
 # Including in your project
 Lantern is available in the Jcenter, so getting it as simple as adding it as a dependency
 ```gradle
-compile 'com.github.nisrulz:lantern:{latest version}'
+implementation 'com.github.nisrulz:lantern:{latest version}'
 ```
 where `{latest version}` corresponds to published version in [ ![Download](https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg) ](https://bintray.com/nisrulz/maven/com.github.nisrulz%3Alantern/_latestVersion)
 
