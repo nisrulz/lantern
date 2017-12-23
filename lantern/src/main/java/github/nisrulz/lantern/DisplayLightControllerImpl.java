@@ -84,6 +84,11 @@ class DisplayLightControllerImpl implements DisplayLightController {
     }
 
     @Override
+    public void disableAutoBrightMode() {
+        disableFullBrightMode();
+    }
+
+    @Override
     public void checkAndRequestSystemPermission() {
         // Check for permission
         final boolean hasSystemWritePermission = utils.checkSystemWritePermission(activity);

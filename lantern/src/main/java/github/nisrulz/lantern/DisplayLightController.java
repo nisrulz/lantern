@@ -30,5 +30,7 @@ interface DisplayLightController {
 
     void enableAutoBrightMode();
 
+    void disableAutoBrightMode();
+
     void checkAndRequestSystemPermission();
 }

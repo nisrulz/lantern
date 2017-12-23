@@ -41,13 +41,16 @@ public class Lantern {
     }
 
     @RequiresPermission(Manifest.permission.CAMERA)
-    public void init(Activity activity) {
+    public boolean init() {
         if (utils.checkIfCameraFeatureExists(activity)) {
             if (isMarshmallowAndAbove()) {
                 flashController = new PostMarshmallow(activity);
             } else {
                 flashController = new PreMarshmallow();
             }
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -57,29 +60,64 @@ public class Lantern {
         displayLightController.cleanup();
     }
 
-    public void turnOnFlashlight() {
-        if (!isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
-            flashController.on();
-            isFlashOn = true;
+    // fluent api
+
+    public boolean on() {
+        return true;
+    }
+
+    public boolean off() {
+        return true;
+    }
+
+    public Lantern autoBright(boolean enabled) {
+        if (enabled) {
+            displayLightController.enableAutoBrightMode();
+        } else {
+            displayLightController.disableAutoBrightMode();
         }
+        return this;
     }
 
-    public void turnOffFlashlight() {
-        if (isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
-            flashController.off();
-            isFlashOn = false;
+    public Lantern fullBright(boolean enabled) {
+        if (enabled) {
+            displayLightController.enableFullBrightMode();
+        } else {
+            displayLightController.disableFullBrightMode();
         }
+        return this;
     }
 
-    public void setDisplayToFullBright() {
-        displayLightController.enableFullBrightMode();
+    public Lantern torch(boolean enabled) {
+        if (enabled) {
+            if (!isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
+                flashController.on();
+                isFlashOn = true;
+            }
+        } else {
+            if (isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
+                flashController.off();
+                isFlashOn = false;
+            }
+        }
+        return this;
     }
 
-    public void resetDisplayToAutoBright() {
-        displayLightController.enableAutoBrightMode();
+    public Lantern alwaysOnDisplay(boolean enabled) {
+        if (enabled) {
+            displayLightController.enableAlwaysOnMode();
+        } else {
+            displayLightController.disableAlwaysOnMode();
+        }
+        return this;
     }
 
-    public void checkAndRequestSystemPermission() {
-        displayLightController.checkAndRequestSystemPermission();
+    public Lantern checkAndRequestSystemPermission(boolean enabled) {
+        if (enabled) {
+            displayLightController.checkAndRequestSystemPermission();
+        }
+        return this;
     }
+
+
 }

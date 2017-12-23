@@ -17,12 +17,11 @@
 package github.nisrulz.lanternproject;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.CompoundButton;
@@ -41,14 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SwitchCompat toggle = findViewById(R.id.switch_flash);
-        lantern = new Lantern(this);
+        lantern = new Lantern(this).checkAndRequestSystemPermission(true);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED) {
-            lantern.init(this);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                    REQUEST_CODE);
+        if (!lantern.init()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
         }
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -56,12 +51,14 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     // true
-                    lantern.turnOnFlashlight();
-                    lantern.setDisplayToFullBright();
+                    lantern.alwaysOnDisplay(true)
+                            .fullBright(true)
+                            .torch(true);
                 } else {
                     //false
-                    lantern.turnOffFlashlight();
-                    lantern.resetDisplayToAutoBright();
+                    lantern.alwaysOnDisplay(false)
+                            .fullBright(false)
+                            .torch(false);
                 }
             }
         });
@@ -73,16 +70,14 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
             @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_CODE) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_GRANTED) {
-                lantern.init(this);
-            } else {
+            if (!lantern.init()) {
                 Toast.makeText(MainActivity.this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
