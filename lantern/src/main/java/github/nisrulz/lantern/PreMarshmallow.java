@@ -18,40 +18,50 @@ package github.nisrulz.lantern;
 
 import android.hardware.Camera;
 
+/**
+ * The type Pre marshmallow.
+ */
 @SuppressWarnings("deprecation")
-class PreMarshmallow {
+class PreMarshmallow implements FlashController {
 
-  private final Camera camera;
+    private final Camera camera;
 
-  public PreMarshmallow() {
-    camera = Camera.open();
-  }
-
-  void turnOn() {
-    try {
-
-      if (camera != null) {
-        Camera.Parameters params = camera.getParameters();
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    /**
+     * Instantiates a new Pre marshmallow.
+     */
+    public PreMarshmallow() {
+        camera = Camera.open();
     }
-  }
 
-  void turnOff() {
-    try {
-      if (camera != null) {
-        Camera.Parameters p = camera.getParameters();
-        p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        camera.setParameters(p);
-        camera.stopPreview();
-        camera.release();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
+    @Override
+    public void on() {
+        try {
+
+            if (camera != null) {
+                Camera.Parameters params = camera.getParameters();
+                params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(params);
+                camera.startPreview();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-  }
+
+    @Override
+    public void off() {
+        try {
+            if (camera != null) {
+                Camera.Parameters p = camera.getParameters();
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(p);
+                camera.stopPreview();
+                camera.release();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

@@ -20,39 +20,51 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
-import android.os.Build;
 import android.os.Build.VERSION_CODES;
 
-class PostMarshmallow {
-  private final CameraManager mCameraManager;
-  private String mCameraId;
+/**
+ * The type Post marshmallow.
+ */
+class PostMarshmallow implements FlashController {
 
-  @TargetApi(VERSION_CODES.LOLLIPOP)
-  public PostMarshmallow(Context context) {
-    mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-    try {
+    private final CameraManager mCameraManager;
 
-      mCameraId = mCameraManager.getCameraIdList()[0];
-    } catch (CameraAccessException e) {
-      e.printStackTrace();
+    private String mCameraId;
+
+    /**
+     * Instantiates a new Post marshmallow.
+     *
+     * @param context the context
+     */
+    @TargetApi(VERSION_CODES.LOLLIPOP)
+    public PostMarshmallow(Context context) {
+        mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+        try {
+
+            mCameraId = mCameraManager.getCameraIdList()[0];
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  @TargetApi(VERSION_CODES.M)
-  void turnOn() {
-    try {
-      mCameraManager.setTorchMode(mCameraId, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+    @TargetApi(VERSION_CODES.M)
+    @Override
+    public void on() {
+        try {
+            mCameraManager.setTorchMode(mCameraId, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-  @TargetApi(Build.VERSION_CODES.M)
-  void turnOff() {
-    try {
-      mCameraManager.setTorchMode(mCameraId, false);
-    } catch (Exception e) {
-      e.printStackTrace();
     }
-  }
+
+    @TargetApi(VERSION_CODES.M)
+    @Override
+    public void off() {
+        try {
+            mCameraManager.setTorchMode(mCameraId, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
