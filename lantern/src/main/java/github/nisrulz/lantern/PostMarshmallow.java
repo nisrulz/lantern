@@ -21,12 +21,13 @@ import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 
 class PostMarshmallow {
   private final CameraManager mCameraManager;
   private String mCameraId;
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+  @TargetApi(VERSION_CODES.LOLLIPOP)
   public PostMarshmallow(Context context) {
     mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
     try {
@@ -37,7 +38,7 @@ class PostMarshmallow {
     }
   }
 
-  @TargetApi(Build.VERSION_CODES.M)
+  @TargetApi(VERSION_CODES.M)
   void turnOn() {
     try {
       mCameraManager.setTorchMode(mCameraId, true);

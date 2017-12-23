@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Nishant Srivastava
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,5 +15,5 @@
   -->
 
 <full-backup-content>
-  <!-- Exclude specific shared preferences that contain GCM registration Id -->
+    <!-- Exclude specific shared preferences that contain GCM registration Id -->
 </full-backup-content>
