@@ -24,19 +24,14 @@ import android.hardware.Camera;
 @SuppressWarnings("deprecation")
 class PreMarshmallow implements FlashController {
 
-    private final Camera camera;
-
-    /**
-     * Instantiates a new Pre marshmallow.
-     */
-    public PreMarshmallow() {
-        camera = Camera.open();
-    }
+    private Camera camera;
 
     @Override
     public void on() {
         try {
-
+            if (camera == null) {
+                camera = Camera.open();
+            }
             if (camera != null) {
                 Camera.Parameters params = camera.getParameters();
                 params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -58,6 +53,7 @@ class PreMarshmallow implements FlashController {
                 camera.setParameters(p);
                 camera.stopPreview();
                 camera.release();
+                camera = null;
             }
         } catch (Exception e) {
             e.printStackTrace();

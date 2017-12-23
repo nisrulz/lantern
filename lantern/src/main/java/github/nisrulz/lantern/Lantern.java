@@ -60,16 +60,6 @@ public class Lantern {
         displayLightController.cleanup();
     }
 
-    // fluent api
-
-    public boolean on() {
-        return true;
-    }
-
-    public boolean off() {
-        return true;
-    }
-
     public Lantern autoBright(boolean enabled) {
         if (enabled) {
             displayLightController.enableAutoBrightMode();
