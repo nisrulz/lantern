@@ -15,36 +15,45 @@
  */
 
 apply plugin: 'com.android.library'
+apply from: '../dependencies.gradle'
 
 android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
-  defaultConfig {
-    minSdkVersion rootProject.ext.minSdkVersion
-    targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode rootProject.ext.libVersionCode
-    versionName rootProject.ext.libVersionName
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode rootProject.versions.libVersionCode
+        versionName rootProject.versions.libVersionName
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-  }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        textOutput "stdout"
+        textReport true
+        checkAllWarnings true
+        warningsAsErrors true
+        showAll true
+        explainIssues true
+        abortOnError false
+        lintConfig file("$projectDir/lint.xml")
+    }
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-  // Testing-only dependencies
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'com.android.support.test:runner:1.0.0'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
-
-  implementation "com.android.support:support-annotations:$rootProject.ext.supportLibVersion"
+    implementation supportLibs
+    testImplementation unitTestLibs
+    androidTestImplementation androidTestsLibs
 }
 
 apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/nishant-config.gradle'
