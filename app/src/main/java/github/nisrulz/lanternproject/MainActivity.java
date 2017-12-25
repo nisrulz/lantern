@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 if (b) {
                     // true
                     lantern.alwaysOnDisplay(true)
-                            .fullBright(true)
-                            .torch(true);
+                            .fullBrightDisplay(true)
+                            .enableTorchMode(true);
                 } else {
                     //false
                     lantern.alwaysOnDisplay(false)
-                            .fullBright(false)
-                            .torch(false);
+                            .fullBrightDisplay(false)
+                            .enableTorchMode(false);
                 }
             }
         });

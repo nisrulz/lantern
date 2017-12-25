@@ -69,7 +69,7 @@ public class Lantern {
         return this;
     }
 
-    public Lantern fullBright(boolean enabled) {
+    public Lantern fullBrightDisplay(boolean enabled) {
         if (enabled) {
             displayLightController.enableFullBrightMode();
         } else {
@@ -78,7 +78,7 @@ public class Lantern {
         return this;
     }
 
-    public Lantern torch(boolean enabled) {
+    public Lantern enableTorchMode(boolean enabled) {
         if (enabled) {
             if (!isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
                 flashController.on();
