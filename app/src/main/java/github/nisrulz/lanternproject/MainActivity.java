@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean state) {
+                if (state) {
                     // true
                     lantern.alwaysOnDisplay(true)
                             .fullBrightDisplay(true)

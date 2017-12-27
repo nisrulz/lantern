@@ -18,8 +18,8 @@ package github.nisrulz.lantern;
 
 interface FlashController {
 
-    void on();
-
     void off();
+
+    void on();
 
 }

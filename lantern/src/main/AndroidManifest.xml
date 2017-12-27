@@ -16,5 +16,5 @@
 
 <manifest package="github.nisrulz.lantern">
 
-  <application></application>
+  <application />
 </manifest>

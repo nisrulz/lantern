@@ -26,11 +26,11 @@ public class Lantern {
 
     private Activity activity;
 
-    private boolean isFlashOn = false;
+    private final DisplayLightController displayLightController;
 
     private FlashController flashController;
 
-    private DisplayLightController displayLightController;
+    private boolean isFlashOn = false;
 
     private Utils utils;
 
@@ -40,24 +40,13 @@ public class Lantern {
         displayLightController = new DisplayLightControllerImpl(activity);
     }
 
-    @RequiresPermission(Manifest.permission.CAMERA)
-    public boolean init() {
-        if (utils.checkIfCameraFeatureExists(activity)) {
-            if (isMarshmallowAndAbove()) {
-                flashController = new PostMarshmallow(activity);
-            } else {
-                flashController = new PreMarshmallow();
-            }
-            return true;
+    public Lantern alwaysOnDisplay(boolean enabled) {
+        if (enabled) {
+            displayLightController.enableAlwaysOnMode();
         } else {
-            return false;
+            displayLightController.disableAlwaysOnMode();
         }
-    }
-
-    public void cleanup() {
-        this.activity = null;
-        utils = null;
-        displayLightController.cleanup();
+        return this;
     }
 
     public Lantern autoBright(boolean enabled) {
@@ -69,13 +58,17 @@ public class Lantern {
         return this;
     }
 
-    public Lantern fullBrightDisplay(boolean enabled) {
+    public Lantern checkAndRequestSystemPermission(boolean enabled) {
         if (enabled) {
-            displayLightController.enableFullBrightMode();
-        } else {
-            displayLightController.disableFullBrightMode();
+            displayLightController.requestSystemWritePermission(activity);
         }
         return this;
+    }
+
+    public void cleanup() {
+        displayLightController.cleanup();
+        this.activity = null;
+        utils = null;
     }
 
     public Lantern enableTorchMode(boolean enabled) {
@@ -93,20 +86,27 @@ public class Lantern {
         return this;
     }
 
-    public Lantern alwaysOnDisplay(boolean enabled) {
+    public Lantern fullBrightDisplay(boolean enabled) {
         if (enabled) {
-            displayLightController.enableAlwaysOnMode();
+            displayLightController.enableFullBrightMode();
         } else {
-            displayLightController.disableAlwaysOnMode();
+            displayLightController.disableFullBrightMode();
         }
         return this;
     }
 
-    public Lantern checkAndRequestSystemPermission(boolean enabled) {
-        if (enabled) {
-            displayLightController.checkAndRequestSystemPermission();
+    @RequiresPermission(Manifest.permission.CAMERA)
+    public boolean init() {
+        if (utils.checkIfCameraFeatureExists(activity) && utils.checkForCameraPermission(activity)) {
+            if (isMarshmallowAndAbove()) {
+                flashController = new PostMarshmallow(activity);
+            } else {
+                flashController = new PreMarshmallow();
+            }
+            return true;
+        } else {
+            return false;
         }
-        return this;
     }
 
 

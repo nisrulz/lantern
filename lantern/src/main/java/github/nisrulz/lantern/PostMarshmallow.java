@@ -22,27 +22,34 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build.VERSION_CODES;
 
-/**
- * The type Post marshmallow.
- */
 class PostMarshmallow implements FlashController {
 
-    private final CameraManager mCameraManager;
+    private String cameraId;
 
-    private String mCameraId;
+    private final CameraManager cameraManager;
 
-    /**
-     * Instantiates a new Post marshmallow.
-     *
-     * @param context the context
-     */
     @TargetApi(VERSION_CODES.LOLLIPOP)
     public PostMarshmallow(Context context) {
-        mCameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
+        cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         try {
 
-            mCameraId = mCameraManager.getCameraIdList()[0];
+            if (cameraManager != null) {
+                cameraId = cameraManager.getCameraIdList()[0];
+            }
+
         } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @TargetApi(VERSION_CODES.M)
+    @Override
+    public void off() {
+        try {
+            if (cameraManager != null) {
+                cameraManager.setTorchMode(cameraId, false);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -51,20 +58,12 @@ class PostMarshmallow implements FlashController {
     @Override
     public void on() {
         try {
-            mCameraManager.setTorchMode(mCameraId, true);
+            if (cameraManager != null) {
+                cameraManager.setTorchMode(cameraId, true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-    }
-
-    @TargetApi(VERSION_CODES.M)
-    @Override
-    public void off() {
-        try {
-            mCameraManager.setTorchMode(mCameraId, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

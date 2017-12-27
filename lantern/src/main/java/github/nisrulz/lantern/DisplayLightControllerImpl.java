@@ -16,7 +16,12 @@
 
 package github.nisrulz.lantern;
 
+import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.view.Window;
 import android.view.WindowManager;
@@ -25,11 +30,17 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     private Activity activity;
 
-    private Utils utils;
-
     public DisplayLightControllerImpl(final Activity activity) {
         this.activity = activity;
-        utils = new Utils();
+    }
+
+    @Override
+    public boolean checkSystemWritePermission(Activity activity) {
+        boolean retVal = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            retVal = Settings.System.canWrite(activity);
+        }
+        return retVal;
     }
 
     @Override
@@ -38,22 +49,18 @@ class DisplayLightControllerImpl implements DisplayLightController {
     }
 
     @Override
-    public void enableFullBrightMode() {
-        if (utils.checkSystemWritePermission(activity)) {
-            Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
-                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+    public void disableAlwaysOnMode() {
+        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 
-            Window window = activity.getWindow();
-            WindowManager.LayoutParams layoutParams = window.getAttributes();
-            layoutParams.screenBrightness = 100 / 100.0f;
-            window.setAttributes(layoutParams);
-        }
-
+    @Override
+    public void disableAutoBrightMode() {
+        disableFullBrightMode();
     }
 
     @Override
     public void disableFullBrightMode() {
-        if (utils.checkSystemWritePermission(activity)) {
+        if (checkSystemWritePermission(activity)) {
             Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
@@ -70,13 +77,8 @@ class DisplayLightControllerImpl implements DisplayLightController {
     }
 
     @Override
-    public void disableAlwaysOnMode() {
-        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-    @Override
     public void enableAutoBrightMode() {
-        if (utils.checkSystemWritePermission(activity)) {
+        if (checkSystemWritePermission(activity)) {
             Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
         }
@@ -84,17 +86,28 @@ class DisplayLightControllerImpl implements DisplayLightController {
     }
 
     @Override
-    public void disableAutoBrightMode() {
-        disableFullBrightMode();
+    public void enableFullBrightMode() {
+        if (checkSystemWritePermission(activity)) {
+            Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+
+            Window window = activity.getWindow();
+            WindowManager.LayoutParams layoutParams = window.getAttributes();
+            layoutParams.screenBrightness = 100 / 100.0f;
+            window.setAttributes(layoutParams);
+        }
+
     }
 
     @Override
-    public void checkAndRequestSystemPermission() {
-        // Check for permission
-        final boolean hasSystemWritePermission = utils.checkSystemWritePermission(activity);
+    public void requestSystemWritePermission(Activity activity) {
         // Request for permission if not yet granted
-        if (!hasSystemWritePermission) {
-            utils.requestSystemWritePermission(activity);
+        if (!checkSystemWritePermission(activity)) {
+            if (isMarshmallowAndAbove()) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + activity.getPackageName()));
+                activity.startActivity(intent);
+            }
         }
     }
 }

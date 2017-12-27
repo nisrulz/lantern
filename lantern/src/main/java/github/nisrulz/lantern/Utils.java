@@ -17,27 +17,14 @@
 package github.nisrulz.lantern;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
 
 /**
  * The type Utils.
  */
 class Utils {
-
-    /**
-     * Is marshmallow and above boolean.
-     *
-     * @return the boolean
-     */
-    static boolean isMarshmallowAndAbove() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
 
     /**
      * Check for camera permission boolean.
@@ -60,34 +47,12 @@ class Utils {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
-
     /**
-     * Check system write permission boolean.
+     * Is marshmallow and above boolean.
      *
-     * @param activity the activity
      * @return the boolean
      */
-    boolean checkSystemWritePermission(Activity activity) {
-        boolean retVal = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            retVal = Settings.System.canWrite(activity);
-        }
-        return retVal;
+    static boolean isMarshmallowAndAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
-
-    /**
-     * Request system write permission.
-     *
-     * @param activity the activity
-     */
-    void requestSystemWritePermission(Activity activity) {
-        if (isMarshmallowAndAbove()) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-            intent.setData(Uri.parse("package:" + activity.getPackageName()));
-            activity.startActivity(intent);
-        }
-    }
-
-
-
 }

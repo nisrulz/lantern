@@ -27,6 +27,23 @@ class PreMarshmallow implements FlashController {
     private Camera camera;
 
     @Override
+    public void off() {
+        try {
+            if (camera != null) {
+                Camera.Parameters p = camera.getParameters();
+                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(p);
+                camera.stopPreview();
+                camera.release();
+                camera = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public void on() {
         try {
             if (camera == null) {
@@ -37,23 +54,6 @@ class PreMarshmallow implements FlashController {
                 params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                 camera.setParameters(params);
                 camera.startPreview();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void off() {
-        try {
-            if (camera != null) {
-                Camera.Parameters p = camera.getParameters();
-                p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters(p);
-                camera.stopPreview();
-                camera.release();
-                camera = null;
             }
         } catch (Exception e) {
             e.printStackTrace();
