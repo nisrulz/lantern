@@ -29,7 +29,7 @@ class PostMarshmallow implements FlashController {
     private final CameraManager cameraManager;
 
     @TargetApi(VERSION_CODES.LOLLIPOP)
-    public PostMarshmallow(Context context) {
+    PostMarshmallow(Context context) {
         cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         try {
 

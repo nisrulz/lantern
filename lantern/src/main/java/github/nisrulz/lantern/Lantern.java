@@ -23,11 +23,12 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
 public class Lantern {
 
-    private Activity activity;
+    private WeakReference<Activity> activityWeakRef;
 
     private final DisplayLightController displayLightController;
 
@@ -35,21 +36,22 @@ public class Lantern {
 
     private boolean isFlashOn = false;
 
-    private Utils utils;
+    private final Utils utils;
 
-    private Handler handler;
+    private final Handler handler;
 
     private long pulseTime = 1000;
 
-    public Lantern(Activity activity) {
-        this.activity = activity;
+    public Lantern(Activity activityWeakRef) {
+        this.activityWeakRef = new WeakReference<>(activityWeakRef);
         utils = new Utils();
         handler = new Handler();
-        displayLightController = new DisplayLightControllerImpl(activity);
+        displayLightController = new DisplayLightControllerImpl(activityWeakRef);
     }
 
-    public void checkForCameraPermission(final int REQUEST_CODE) {
-        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+    public void requestCameraPermission(final int REQUEST_CODE) {
+        ActivityCompat
+                .requestPermissions(activityWeakRef.get(), new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
     }
 
     public Lantern alwaysOnDisplay(boolean enabled) {
@@ -71,7 +73,7 @@ public class Lantern {
     }
 
 
-    private Runnable pulseRunnable = new Runnable() {
+    private final Runnable pulseRunnable = new Runnable() {
         @Override
         public void run() {
             enableTorchMode(!isFlashOn);
@@ -91,35 +93,37 @@ public class Lantern {
         } else {
             handler.removeCallbacks(pulseRunnable);
         }
-
         return this;
     }
 
     public Lantern checkAndRequestSystemPermission(boolean enabled) {
         if (enabled) {
-            displayLightController.requestSystemWritePermission(activity);
+            displayLightController.requestSystemWritePermission(activityWeakRef.get());
         }
         return this;
     }
 
     public void cleanup() {
         displayLightController.cleanup();
-        this.activity = null;
-        utils = null;
-        handler = null;
+        this.activityWeakRef = null;
     }
 
     public Lantern enableTorchMode(boolean enabled) {
-        if (enabled) {
-            if (!isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
-                flashController.on();
-                isFlashOn = true;
+        if (activityWeakRef != null) {
+            if (enabled) {
+                if (!isFlashOn && utils.checkForCameraPermission(activityWeakRef.get().getApplicationContext())) {
+                    flashController.on();
+                    isFlashOn = true;
+                }
+            } else {
+                if (isFlashOn && utils.checkForCameraPermission(activityWeakRef.get().getApplicationContext())) {
+                    flashController.off();
+                    isFlashOn = false;
+                }
             }
         } else {
-            if (isFlashOn && utils.checkForCameraPermission(activity.getApplicationContext())) {
-                flashController.off();
-                isFlashOn = false;
-            }
+            flashController.off();
+            isFlashOn = false;
         }
         return this;
     }
@@ -135,17 +139,17 @@ public class Lantern {
 
     @RequiresPermission(Manifest.permission.CAMERA)
     public boolean init() {
-        if (utils.checkIfCameraFeatureExists(activity) && utils.checkForCameraPermission(activity)) {
-            if (isMarshmallowAndAbove()) {
-                flashController = new PostMarshmallow(activity);
-            } else {
-                flashController = new PreMarshmallow();
+        if (activityWeakRef != null) {
+            if (utils.checkIfCameraFeatureExists(activityWeakRef.get()) && utils
+                    .checkForCameraPermission(activityWeakRef.get())) {
+                if (isMarshmallowAndAbove()) {
+                    flashController = new PostMarshmallow(activityWeakRef.get());
+                } else {
+                    flashController = new PreMarshmallow();
+                }
+                return true;
             }
-            return true;
-        } else {
-            return false;
         }
+        return false;
     }
-
-
 }

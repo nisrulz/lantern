@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         lantern = new Lantern(this).checkAndRequestSystemPermission(true);
 
         if (!lantern.init()) {
-            lantern.checkForCameraPermission(REQUEST_CODE);
+            lantern.requestCameraPermission(REQUEST_CODE);
         }
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
