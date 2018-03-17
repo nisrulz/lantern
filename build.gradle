@@ -50,7 +50,6 @@ ext {
     libPomUrl = 'https://github.com/nisrulz/lantern'
     libGithubRepo = 'nisrulz/lantern'
 
-
     libModuleName = 'lantern'
     libModuleDesc =
             'Android library to facilitate using camera flash as a torch and screen full bright as fallback.'

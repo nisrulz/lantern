@@ -22,13 +22,12 @@ ext {
             minSdk                  : 14,
             targetSdk               : 27,
             compileSdk              : 27,
-            buildTools              : '27.0.2',
 
             androidGradlePlugin     : '3.0.1',
             gradleBintrayPlugin     : '1.7.3',
             androidMavenGradlePlugin: '2.0',
 
-            support                 : "27.1.2",
+            support                 : "27.1.0",
 
             junit                   : '4.12',
             espresso                : '3.0.1',
