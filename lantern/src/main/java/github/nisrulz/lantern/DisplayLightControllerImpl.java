@@ -38,7 +38,7 @@ class DisplayLightControllerImpl implements DisplayLightController {
     public boolean checkSystemWritePermission(Activity activity) {
         boolean retVal = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            retVal = Settings.System.canWrite(activity);
+            retVal = Settings.System.canWrite(activity.getApplicationContext());
         }
         return retVal;
     }

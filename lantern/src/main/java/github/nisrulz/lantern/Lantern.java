@@ -20,7 +20,10 @@ import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 import android.Manifest;
 import android.app.Activity;
+import android.os.Handler;
 import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import java.util.concurrent.TimeUnit;
 
 public class Lantern {
 
@@ -34,10 +37,19 @@ public class Lantern {
 
     private Utils utils;
 
+    private Handler handler;
+
+    private long pulseTime = 1000;
+
     public Lantern(Activity activity) {
         this.activity = activity;
         utils = new Utils();
+        handler = new Handler();
         displayLightController = new DisplayLightControllerImpl(activity);
+    }
+
+    public void checkForCameraPermission(final int REQUEST_CODE) {
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
     }
 
     public Lantern alwaysOnDisplay(boolean enabled) {
@@ -58,6 +70,31 @@ public class Lantern {
         return this;
     }
 
+
+    private Runnable pulseRunnable = new Runnable() {
+        @Override
+        public void run() {
+            enableTorchMode(!isFlashOn);
+            handler.postDelayed(pulseRunnable, pulseTime);
+        }
+    };
+
+
+    public Lantern withDelay(long time, final TimeUnit timeUnit) {
+        this.pulseTime = TimeUnit.MILLISECONDS.convert(time, timeUnit);
+        return this;
+    }
+
+    public Lantern pulse(boolean enabled) {
+        if (enabled) {
+            handler.postDelayed(pulseRunnable, pulseTime);
+        } else {
+            handler.removeCallbacks(pulseRunnable);
+        }
+
+        return this;
+    }
+
     public Lantern checkAndRequestSystemPermission(boolean enabled) {
         if (enabled) {
             displayLightController.requestSystemWritePermission(activity);
@@ -69,6 +106,7 @@ public class Lantern {
         displayLightController.cleanup();
         this.activity = null;
         utils = null;
+        handler = null;
     }
 
     public Lantern enableTorchMode(boolean enabled) {

@@ -16,17 +16,16 @@
 
 package github.nisrulz.lanternproject;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import github.nisrulz.lantern.Lantern;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         lantern = new Lantern(this).checkAndRequestSystemPermission(true);
 
         if (!lantern.init()) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+            lantern.checkForCameraPermission(REQUEST_CODE);
         }
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -53,12 +52,13 @@ public class MainActivity extends AppCompatActivity {
                     // true
                     lantern.alwaysOnDisplay(true)
                             .fullBrightDisplay(true)
-                            .enableTorchMode(true);
+                            .enableTorchMode(true)
+                            .pulse(true).withDelay(1, TimeUnit.SECONDS);
                 } else {
                     //false
                     lantern.alwaysOnDisplay(false)
                             .fullBrightDisplay(false)
-                            .enableTorchMode(false);
+                            .enableTorchMode(false).pulse(false);
                 }
             }
         });
