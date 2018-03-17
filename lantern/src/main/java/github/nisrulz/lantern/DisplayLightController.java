@@ -16,11 +16,9 @@
 
 package github.nisrulz.lantern;
 
-import android.app.Activity;
-
 interface DisplayLightController {
 
-    boolean checkSystemWritePermission(Activity activity);
+    boolean checkSystemWritePermission();
 
     void cleanup();
 
@@ -36,5 +34,5 @@ interface DisplayLightController {
 
     void enableFullBrightMode();
 
-    void requestSystemWritePermission(Activity activity);
+    void requestSystemWritePermission();
 }

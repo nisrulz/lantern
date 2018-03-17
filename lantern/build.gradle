@@ -51,9 +51,14 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation supportLibs
+    implementation supportDeps.supportAnnotation
+    implementation lifecycle.runtime
+
+    // Testing
     testImplementation unitTestLibs
     androidTestImplementation androidTestsLibs
+
+
 }
 
 apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/publish-config.gradle'

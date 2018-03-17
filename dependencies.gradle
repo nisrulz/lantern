@@ -31,10 +31,16 @@ ext {
 
             junit                   : '4.12',
             espresso                : '3.0.1',
-            espressoRunner          : '1.0.1'
+            espressoRunner          : '1.0.1',
+
+            lifeycle_runtime        : '1.1.0'
     ]
 
     junit = [junit: "junit:junit:$versions.junit"]
+
+    lifecycle = [
+            'runtime': "android.arch.lifecycle:runtime:$versions.lifeycle_runtime"
+    ]
 
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
@@ -64,5 +70,4 @@ ext {
     supportLibs = supportDeps.values()
     unitTestLibs = unitTest.values()
     androidTestsLibs = androidTests.values() + supportLibs
-
 }

@@ -17,6 +17,7 @@
 package github.nisrulz.lantern;
 
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 
 /**
  * The type Pre marshmallow.
@@ -46,8 +47,13 @@ class PreMarshmallow implements FlashController {
     @Override
     public void on() {
         try {
+            off();
             if (camera == null) {
-                camera = Camera.open();
+                try {
+                    camera = Camera.open(getCameraId());
+                } catch (RuntimeException ex) {
+                    System.out.println("Runtime error while opening camera!");
+                }
             }
             if (camera != null) {
                 Camera.Parameters params = camera.getParameters();
@@ -59,5 +65,17 @@ class PreMarshmallow implements FlashController {
             e.printStackTrace();
         }
 
+    }
+
+    private int getCameraId() {
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            CameraInfo info = new CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == CameraInfo.CAMERA_FACING_BACK) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

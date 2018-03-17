@@ -16,10 +16,12 @@
 
 package github.nisrulz.lanternproject;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.CompoundButton;
@@ -39,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SwitchCompat toggle = findViewById(R.id.switch_flash);
-        lantern = new Lantern(this).checkAndRequestSystemPermission(true);
+        lantern = new Lantern(this).checkAndRequestSystemPermission(true).observeLifecycle(this);
 
         if (!lantern.init()) {
-            lantern.requestCameraPermission(REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
         }
 
         toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -62,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        lantern.cleanup();
-        super.onDestroy();
     }
 
     @SuppressLint("MissingPermission")

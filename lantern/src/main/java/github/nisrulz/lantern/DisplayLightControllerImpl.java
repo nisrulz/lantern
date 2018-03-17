@@ -25,32 +25,33 @@ import android.os.Build;
 import android.provider.Settings;
 import android.view.Window;
 import android.view.WindowManager;
+import java.lang.ref.WeakReference;
 
 class DisplayLightControllerImpl implements DisplayLightController {
 
-    private Activity activity;
+    private WeakReference<Activity> activityWeakRef;
 
     public DisplayLightControllerImpl(final Activity activity) {
-        this.activity = activity;
+        this.activityWeakRef = new WeakReference<>(activity);
     }
 
     @Override
-    public boolean checkSystemWritePermission(Activity activity) {
+    public boolean checkSystemWritePermission() {
         boolean retVal = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            retVal = Settings.System.canWrite(activity.getApplicationContext());
+            retVal = Settings.System.canWrite(activityWeakRef.get().getApplicationContext());
         }
         return retVal;
     }
 
     @Override
     public void cleanup() {
-        this.activity = null;
+        this.activityWeakRef = null;
     }
 
     @Override
     public void disableAlwaysOnMode() {
-        activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        activityWeakRef.get().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -60,11 +61,11 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     @Override
     public void disableFullBrightMode() {
-        if (checkSystemWritePermission(activity)) {
-            Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+        if (checkSystemWritePermission()) {
+            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-            Window window = activity.getWindow();
+            Window window = activityWeakRef.get().getWindow();
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.screenBrightness = 10 / 100.0f;
             window.setAttributes(layoutParams);
@@ -73,13 +74,13 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     @Override
     public void enableAlwaysOnMode() {
-        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        activityWeakRef.get().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
     public void enableAutoBrightMode() {
-        if (checkSystemWritePermission(activity)) {
-            Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+        if (checkSystemWritePermission()) {
+            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
         }
 
@@ -87,11 +88,11 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     @Override
     public void enableFullBrightMode() {
-        if (checkSystemWritePermission(activity)) {
-            Settings.System.putInt(activity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+        if (checkSystemWritePermission()) {
+            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-            Window window = activity.getWindow();
+            Window window = activityWeakRef.get().getWindow();
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.screenBrightness = 100 / 100.0f;
             window.setAttributes(layoutParams);
@@ -100,13 +101,13 @@ class DisplayLightControllerImpl implements DisplayLightController {
     }
 
     @Override
-    public void requestSystemWritePermission(Activity activity) {
+    public void requestSystemWritePermission() {
         // Request for permission if not yet granted
-        if (!checkSystemWritePermission(activity)) {
+        if (!checkSystemWritePermission()) {
             if (isMarshmallowAndAbove()) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                intent.setData(Uri.parse("package:" + activity.getPackageName()));
-                activity.startActivity(intent);
+                intent.setData(Uri.parse("package:" + activityWeakRef.get().getPackageName()));
+                activityWeakRef.get().startActivity(intent);
             }
         }
     }

@@ -20,13 +20,16 @@ import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 import android.Manifest;
 import android.app.Activity;
+import android.arch.lifecycle.Lifecycle.Event;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.os.Handler;
 import android.support.annotation.RequiresPermission;
-import android.support.v4.app.ActivityCompat;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
-public class Lantern {
+public class Lantern implements LifecycleObserver {
 
     private WeakReference<Activity> activityWeakRef;
 
@@ -34,24 +37,28 @@ public class Lantern {
 
     private FlashController flashController;
 
-    private boolean isFlashOn = false;
-
-    private final Utils utils;
-
     private final Handler handler;
+
+    private boolean isFlashOn = false;
 
     private long pulseTime = 1000;
 
-    public Lantern(Activity activityWeakRef) {
-        this.activityWeakRef = new WeakReference<>(activityWeakRef);
+    private final Utils utils;
+
+    private final Runnable pulseRunnable = new Runnable() {
+        @Override
+        public void run() {
+            enableTorchMode(!isFlashOn);
+            handler.postDelayed(pulseRunnable, pulseTime);
+        }
+    };
+
+
+    public Lantern(Activity activity) {
+        this.activityWeakRef = new WeakReference<>(activity);
         utils = new Utils();
         handler = new Handler();
-        displayLightController = new DisplayLightControllerImpl(activityWeakRef);
-    }
-
-    public void requestCameraPermission(final int REQUEST_CODE) {
-        ActivityCompat
-                .requestPermissions(activityWeakRef.get(), new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
+        displayLightController = new DisplayLightControllerImpl(activity);
     }
 
     public Lantern alwaysOnDisplay(boolean enabled) {
@@ -72,38 +79,16 @@ public class Lantern {
         return this;
     }
 
-
-    private final Runnable pulseRunnable = new Runnable() {
-        @Override
-        public void run() {
-            enableTorchMode(!isFlashOn);
-            handler.postDelayed(pulseRunnable, pulseTime);
-        }
-    };
-
-
-    public Lantern withDelay(long time, final TimeUnit timeUnit) {
-        this.pulseTime = TimeUnit.MILLISECONDS.convert(time, timeUnit);
-        return this;
-    }
-
-    public Lantern pulse(boolean enabled) {
-        if (enabled) {
-            handler.postDelayed(pulseRunnable, pulseTime);
-        } else {
-            handler.removeCallbacks(pulseRunnable);
-        }
-        return this;
-    }
-
     public Lantern checkAndRequestSystemPermission(boolean enabled) {
         if (enabled) {
-            displayLightController.requestSystemWritePermission(activityWeakRef.get());
+            displayLightController.requestSystemWritePermission();
         }
         return this;
     }
 
+    @OnLifecycleEvent(Event.ON_DESTROY)
     public void cleanup() {
+        handler.removeCallbacks(pulseRunnable);
         displayLightController.cleanup();
         this.activityWeakRef = null;
     }
@@ -151,5 +136,26 @@ public class Lantern {
             }
         }
         return false;
+    }
+
+    public Lantern observeLifecycle(LifecycleOwner lifecycleOwner) {
+        // Subscribe to listening lifecycle
+        lifecycleOwner.getLifecycle().addObserver(this);
+
+        return this;
+    }
+
+    public Lantern pulse(boolean enabled) {
+        if (enabled) {
+            handler.postDelayed(pulseRunnable, pulseTime);
+        } else {
+            handler.removeCallbacks(pulseRunnable);
+        }
+        return this;
+    }
+
+    public Lantern withDelay(long time, final TimeUnit timeUnit) {
+        this.pulseTime = TimeUnit.MILLISECONDS.convert(time, timeUnit);
+        return this;
     }
 }
