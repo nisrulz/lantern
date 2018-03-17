@@ -79,10 +79,8 @@ public class Lantern implements LifecycleObserver {
         return this;
     }
 
-    public Lantern checkAndRequestSystemPermission(boolean enabled) {
-        if (enabled) {
-            displayLightController.requestSystemWritePermission();
-        }
+    public Lantern checkAndRequestSystemPermission() {
+        displayLightController.requestSystemWritePermission();
         return this;
     }
 
@@ -123,7 +121,7 @@ public class Lantern implements LifecycleObserver {
     }
 
     @RequiresPermission(Manifest.permission.CAMERA)
-    public boolean init() {
+    public boolean initTorch() {
         if (activityWeakRef != null) {
             if (utils.checkIfCameraFeatureExists(activityWeakRef.get()) && utils
                     .checkForCameraPermission(activityWeakRef.get())) {

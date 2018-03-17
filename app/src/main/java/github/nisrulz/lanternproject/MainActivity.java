@@ -41,9 +41,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SwitchCompat toggle = findViewById(R.id.switch_flash);
-        lantern = new Lantern(this).checkAndRequestSystemPermission(true).observeLifecycle(this);
+        lantern = new Lantern(this)
+                .checkAndRequestSystemPermission()
+                .observeLifecycle(this);
 
-        if (!lantern.init()) {
+        // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
+        // In case permission is not granted, request for the permission and retry by calling `init()` method
+        // NOTE: In case camera feature is does not exist, `init()` will return `false` and Lantern will not have
+        // torch functionality but only screen based features
+        if (!lantern.initTorch()) {
+            // Request if permission is not granted
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
         }
 
@@ -73,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_CODE) {
-            if (!lantern.init()) {
+            if (!lantern.initTorch()) {
                 Toast.makeText(MainActivity.this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
