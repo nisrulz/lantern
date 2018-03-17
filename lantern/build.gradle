@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply from: '../dependencies.gradle'
+apply from: '../libconfig.gradle'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -23,8 +24,8 @@ android {
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
-        versionCode rootProject.versions.libVersionCode
-        versionName rootProject.versions.libVersionName
+        versionCode libConfig.versionCode
+        versionName libConfig.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -55,4 +56,4 @@ dependencies {
     androidTestImplementation androidTestsLibs
 }
 
-apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/nishant-config.gradle'
+apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/publish-config.gradle'

@@ -41,18 +41,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-
-ext {
-    // Library Info
-    libVersionCode = 5
-    libVersionName = '1.1.3'
-    libPomUrl = 'https://github.com/nisrulz/lantern'
-    libGithubRepo = 'nisrulz/lantern'
-
-    libModuleName = 'lantern'
-    libModuleDesc =
-            'Android library to facilitate using camera flash as a torch and screen full bright as fallback.'
-    libBintrayName = 'com.github.nisrulz:lantern'
-}
-
