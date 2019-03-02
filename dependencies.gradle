@@ -23,28 +23,28 @@ ext {
             targetSdk               : 28,
             compileSdk              : 28,
 
-            androidGradlePlugin     : '3.2.1',
+            androidGradlePlugin     : '3.3.1',
             gradleBintrayPlugin     : '1.8.4',
             androidMavenGradlePlugin: '2.1',
 
-            support                 : '28.0.0',
+            support                 : '1.0.0',
 
             junit                   : '4.12',
-            espresso                : '3.0.2',
-            testRunner              : '1.0.2',
+            espresso                : '3.1.1',
+            testRunner              : '1.1.1',
 
-            lifeycle_runtime        : '1.1.1'
+            lifeycle_runtime        : '2.0.0'
     ]
 
     junit = [junit: "junit:junit:$versions.junit"]
 
     lifecycle = [
-            'runtime': "android.arch.lifecycle:runtime:$versions.lifeycle_runtime"
+            'runtime': "androidx.lifecycle:lifecycle-runtime:$versions.lifeycle_runtime"
     ]
 
     supportDeps = [
             appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
-            supportAnnotation: "com.android.support:support-annotations:$versions.support"
+            supportAnnotation: "androidx.annotation:annotation:$versions.support"
     ]
 
     unitTest = [

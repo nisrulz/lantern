@@ -20,12 +20,12 @@ import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle.Event;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.Lifecycle.Event;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 import android.os.Handler;
-import android.support.annotation.RequiresPermission;
+import androidx.annotation.RequiresPermission;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
