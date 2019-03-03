@@ -18,6 +18,7 @@ package github.nisrulz.lantern;
 
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
+import android.hardware.Camera.Parameters;
 
 /**
  * The type Pre marshmallow.
@@ -26,6 +27,20 @@ import android.hardware.Camera.CameraInfo;
 class PreMarshmallow implements FlashController {
 
     private Camera camera;
+
+    public PreMarshmallow() {
+        initCamera();
+    }
+
+    private void initCamera(){
+        if (camera == null) {
+            try {
+                camera = Camera.open(getCameraId());
+            } catch (RuntimeException ex) {
+                System.out.println("Runtime error while opening camera!");
+            }
+        }
+    }
 
     @Override
     public void off() {
@@ -48,13 +63,7 @@ class PreMarshmallow implements FlashController {
     public void on() {
         try {
             off();
-            if (camera == null) {
-                try {
-                    camera = Camera.open(getCameraId());
-                } catch (RuntimeException ex) {
-                    System.out.println("Runtime error while opening camera!");
-                }
-            }
+            initCamera();
             if (camera != null) {
                 Camera.Parameters params = camera.getParameters();
                 params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
@@ -65,6 +74,14 @@ class PreMarshmallow implements FlashController {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean torchEnabled() {
+        if(camera!=null && camera.getParameters()!=null) {
+            return camera.getParameters().getFlashMode() == Parameters.FLASH_MODE_TORCH;
+        }
+        return false;
     }
 
     private int getCameraId() {

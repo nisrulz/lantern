@@ -39,7 +39,7 @@ class DisplayLightControllerImpl implements DisplayLightController {
     public boolean checkSystemWritePermission() {
         boolean retVal = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            retVal = Settings.System.canWrite(activityWeakRef.get().getApplicationContext());
+            retVal = Settings.System.canWrite(getActivityRef().getApplicationContext());
         }
         return retVal;
     }
@@ -51,7 +51,7 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     @Override
     public void disableAlwaysOnMode() {
-        activityWeakRef.get().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getActivityRef().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -62,10 +62,10 @@ class DisplayLightControllerImpl implements DisplayLightController {
     @Override
     public void disableFullBrightMode() {
         if (checkSystemWritePermission()) {
-            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+            Settings.System.putInt(getActivityRef().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-            Window window = activityWeakRef.get().getWindow();
+            Window window = getActivityRef().getWindow();
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.screenBrightness = 10 / 100.0f;
             window.setAttributes(layoutParams);
@@ -74,13 +74,13 @@ class DisplayLightControllerImpl implements DisplayLightController {
 
     @Override
     public void enableAlwaysOnMode() {
-        activityWeakRef.get().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getActivityRef().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
     public void enableAutoBrightMode() {
         if (checkSystemWritePermission()) {
-            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+            Settings.System.putInt(getActivityRef().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
         }
 
@@ -89,10 +89,10 @@ class DisplayLightControllerImpl implements DisplayLightController {
     @Override
     public void enableFullBrightMode() {
         if (checkSystemWritePermission()) {
-            Settings.System.putInt(activityWeakRef.get().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+            Settings.System.putInt(getActivityRef().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
                     Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-            Window window = activityWeakRef.get().getWindow();
+            Window window = getActivityRef().getWindow();
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.screenBrightness = 100 / 100.0f;
             window.setAttributes(layoutParams);
@@ -106,9 +106,13 @@ class DisplayLightControllerImpl implements DisplayLightController {
         if (!checkSystemWritePermission()) {
             if (isMarshmallowAndAbove()) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                intent.setData(Uri.parse("package:" + activityWeakRef.get().getPackageName()));
-                activityWeakRef.get().startActivity(intent);
+                intent.setData(Uri.parse("package:" + getActivityRef().getPackageName()));
+                getActivityRef().startActivity(intent);
             }
         }
+    }
+
+    private Activity getActivityRef(){
+        return activityWeakRef.get();
     }
 }

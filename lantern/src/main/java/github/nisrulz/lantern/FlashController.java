@@ -22,4 +22,5 @@ interface FlashController {
 
     void on();
 
+    boolean torchEnabled();
 }

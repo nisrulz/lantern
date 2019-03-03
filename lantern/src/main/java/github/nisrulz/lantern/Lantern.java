@@ -39,8 +39,6 @@ public class Lantern implements LifecycleObserver {
 
     private final Handler handler;
 
-    private boolean isFlashOn = false;
-
     private long pulseTime = 1000;
 
     private final Utils utils;
@@ -48,8 +46,10 @@ public class Lantern implements LifecycleObserver {
     private final Runnable pulseRunnable = new Runnable() {
         @Override
         public void run() {
-            enableTorchMode(!isFlashOn);
-            handler.postDelayed(pulseRunnable, pulseTime);
+            if(flashController!=null) {
+                enableTorchMode(!flashController.torchEnabled());
+                handler.postDelayed(pulseRunnable, pulseTime);
+            }
         }
     };
 
@@ -94,19 +94,18 @@ public class Lantern implements LifecycleObserver {
     public Lantern enableTorchMode(boolean enabled) {
         if (activityWeakRef != null) {
             if (enabled) {
-                if (!isFlashOn && utils.checkForCameraPermission(activityWeakRef.get().getApplicationContext())) {
+                if (!flashController.torchEnabled()
+                        && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
                     flashController.on();
-                    isFlashOn = true;
                 }
             } else {
-                if (isFlashOn && utils.checkForCameraPermission(activityWeakRef.get().getApplicationContext())) {
+                if (flashController.torchEnabled()
+                        && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
                     flashController.off();
-                    isFlashOn = false;
                 }
             }
         } else {
             flashController.off();
-            isFlashOn = false;
         }
         return this;
     }
@@ -123,10 +122,10 @@ public class Lantern implements LifecycleObserver {
     @RequiresPermission(Manifest.permission.CAMERA)
     public boolean initTorch() {
         if (activityWeakRef != null) {
-            if (utils.checkIfCameraFeatureExists(activityWeakRef.get()) && utils
-                    .checkForCameraPermission(activityWeakRef.get())) {
+            if (utils.checkIfCameraFeatureExists(getActivityRef()) && utils
+                    .checkForCameraPermission(getActivityRef())) {
                 if (isMarshmallowAndAbove()) {
-                    flashController = new PostMarshmallow(activityWeakRef.get());
+                    flashController = new PostMarshmallow(getActivityRef());
                 } else {
                     flashController = new PreMarshmallow();
                 }
@@ -156,8 +155,8 @@ public class Lantern implements LifecycleObserver {
         this.pulseTime = TimeUnit.MILLISECONDS.convert(time, timeUnit);
         return this;
     }
-    
-    public boolean isTorchOn() {
-        return isFlashOn;
+
+    private Activity getActivityRef(){
+        return activityWeakRef.get();
     }
 }
