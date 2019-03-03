@@ -163,6 +163,11 @@ Lantern uses a fluent api. You can enable/disable feature by calling the right m
             // Disable pulsating torch
             .pulse(false);
         ```
+    + Query enabled state of the torch i.e., flashlight
+
+        ```java
+        val torchEnabled = lantern.isTorchEnabled();
+        ```
 
 # Pull Requests
 I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request. Here are some basic rules to follow to ensure timely addition of your request:

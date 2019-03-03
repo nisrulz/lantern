@@ -156,6 +156,14 @@ public class Lantern implements LifecycleObserver {
         return this;
     }
 
+    /**
+     * Torch Enabled State
+     * @return boolean
+     */
+    public boolean isTorchEnabled(){
+        return flashController.torchEnabled();
+    }
+
     private Activity getActivityRef(){
         return activityWeakRef.get();
     }
