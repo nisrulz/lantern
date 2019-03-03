@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                 .checkAndRequestSystemPermission()
                 .observeLifecycle(this);
 
+        // Check if torch is already enabled, update state of toggle switch
+        toggle.setChecked(lantern.isTorchEnabled());
+
         // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
         // In case permission is not granted, request for the permission and retry by calling `init()` method
         // NOTE: In case camera feature is does not exist, `init()` will return `false` and Lantern will not have
