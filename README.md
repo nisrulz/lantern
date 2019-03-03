@@ -166,7 +166,7 @@ Lantern uses a fluent api. You can enable/disable feature by calling the right m
     + Query enabled state of the torch i.e., flashlight
 
         ```java
-        val torchEnabled = lantern.isTorchEnabled();
+        boolean torchEnabled = lantern.isTorchEnabled();
         ```
 
 # Pull Requests
