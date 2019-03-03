@@ -45,14 +45,16 @@ android {
         abortOnError false
         lintConfig file("$projectDir/lint.xml")
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     implementation supportLibs
     testImplementation unitTestLibs
     androidTestImplementation androidTestsLibs
-
     implementation project(':lantern')
 }
