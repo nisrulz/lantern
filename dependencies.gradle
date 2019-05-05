@@ -28,6 +28,7 @@ ext {
             androidMavenGradlePlugin: '2.1',
 
             support                 : '1.0.0',
+            appcompat               : '1.0.0',
 
             junit                   : '4.12',
             espresso                : '3.1.1',
@@ -43,20 +44,18 @@ ext {
     ]
 
     supportDeps = [
-            appcompatV7      : "com.android.support:appcompat-v7:$versions.support",
-            supportAnnotation: "androidx.annotation:annotation:$versions.support"
+            supportAnnotation: "androidx.annotation:annotation:$versions.support",
+            appcompat: "androidx.appcompat:appcompat:$versions.appcompat"
     ]
 
-    unitTest = [
-            supportAnnotation: "com.android.support:support-annotations:$versions.support",
-    ] + junit
+    unitTest = junit
 
     androidTests = [
-            espressoCore   : "com.android.support.test.espresso:espresso-core:$versions.espresso",
-            espressoContrib: "com.android.support.test.espresso:espresso-contrib:$versions.espresso",
-            espressoIntents: "com.android.support.test.espresso:espresso-intents:$versions.espresso",
-            testRunner     : "com.android.support.test:runner:$versions.testRunner",
-            testRules      : "com.android.support.test:rules:$versions.testRunner",
+            espressoCore   : "androidx.test.espresso:espresso-core:$versions.espresso",
+            espressoContrib: "androidx.test.espresso:espresso-contrib:$versions.espresso",
+            espressoIntents: "androidx.test.espresso:espresso-intents:$versions.espresso",
+            testRunner     : "androidx.test:runner:$versions.testRunner",
+            testRules      : "androidx.test:rules:$versions.testRunner",
     ]
 
     gradlePlug = [
