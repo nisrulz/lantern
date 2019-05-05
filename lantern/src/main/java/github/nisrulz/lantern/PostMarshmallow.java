@@ -36,7 +36,7 @@ class PostMarshmallow implements FlashController {
     PostMarshmallow(Context context) {
         cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
         try {
-            if (cameraManager != null) {
+            if ((cameraManager != null) && (cameraManager.getCameraIdList().length > 0)) {
                 cameraId = cameraManager.getCameraIdList()[0];
                 cameraManager.registerTorchCallback(new TorchCallback() {
                     @Override
