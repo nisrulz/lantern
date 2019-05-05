@@ -92,20 +92,22 @@ public class Lantern implements LifecycleObserver {
     }
 
     public Lantern enableTorchMode(boolean enabled) {
-        if (activityWeakRef != null) {
-            if (enabled) {
-                if (!flashController.torchEnabled()
-                        && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
-                    flashController.on();
+        if(flashController!=null) {
+            if (activityWeakRef != null) {
+                if (enabled) {
+                    if (!flashController.torchEnabled()
+                            && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
+                        flashController.on();
+                    }
+                } else {
+                    if (flashController.torchEnabled()
+                            && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
+                        flashController.off();
+                    }
                 }
             } else {
-                if (flashController.torchEnabled()
-                        && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
-                    flashController.off();
-                }
+                flashController.off();
             }
-        } else {
-            flashController.off();
         }
         return this;
     }
