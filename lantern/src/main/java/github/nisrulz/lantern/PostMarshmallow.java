@@ -40,13 +40,13 @@ class PostMarshmallow implements FlashController {
                 cameraId = cameraManager.getCameraIdList()[0];
                 cameraManager.registerTorchCallback(new TorchCallback() {
                     @Override
-                    public void onTorchModeUnavailable(@NonNull final String cameraId) {
+                    public void onTorchModeUnavailable(@NonNull final String cameraIdentifier) {
                         torchEnabledFlag = false;
                         super.onTorchModeUnavailable(cameraId);
                     }
 
                     @Override
-                    public void onTorchModeChanged(@NonNull final String cameraId, final boolean enabled) {
+                    public void onTorchModeChanged(@NonNull final String cameraIdentifier, final boolean enabled) {
                         torchEnabledFlag = enabled;
                         super.onTorchModeChanged(cameraId, enabled);
                     }

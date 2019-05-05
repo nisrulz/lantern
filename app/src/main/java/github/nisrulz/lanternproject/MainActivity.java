@@ -19,13 +19,12 @@ package github.nisrulz.lanternproject;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import android.widget.CompoundButton;
-import android.widget.Toast;
+import androidx.core.app.ActivityCompat;
 import github.nisrulz.lantern.Lantern;
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Lantern lantern;
 
+    // Runtime Permission is being handled and checked against internally by Lantern
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,11 @@ public class MainActivity extends AppCompatActivity {
 
         SwitchCompat toggle = findViewById(R.id.switch_flash);
         lantern = new Lantern(this)
-                .checkAndRequestSystemPermission()
                 .observeLifecycle(this);
 
         // Check if torch is already enabled, update state of toggle switch
         toggle.setChecked(lantern.isTorchEnabled());
-
+        
         // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
         // In case permission is not granted, request for the permission and retry by calling `init()` method
         // NOTE: In case camera feature is does not exist, `init()` will return `false` and Lantern will not have
@@ -57,21 +57,18 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE);
         }
 
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean state) {
-                if (state) {
-                    // true
-                    lantern.alwaysOnDisplay(true)
-                            .fullBrightDisplay(true)
-                            .enableTorchMode(true)
-                            .pulse(true).withDelay(1, TimeUnit.SECONDS);
-                } else {
-                    //false
-                    lantern.alwaysOnDisplay(false)
-                            .fullBrightDisplay(false)
-                            .enableTorchMode(false).pulse(false);
-                }
+        toggle.setOnCheckedChangeListener((compoundButton, state) -> {
+            if (state) {
+                // true
+                lantern.alwaysOnDisplay(true)
+                        .fullBrightDisplay(true)
+                        .enableTorchMode(true)
+                        .pulse(true).withDelay(1, TimeUnit.SECONDS);
+            } else {
+                //false
+                lantern.alwaysOnDisplay(false)
+                        .fullBrightDisplay(false)
+                        .enableTorchMode(false).pulse(false);
             }
         });
     }
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE) {
             if (!lantern.initTorch()) {
-                Toast.makeText(MainActivity.this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show();
             }
         }
     }
