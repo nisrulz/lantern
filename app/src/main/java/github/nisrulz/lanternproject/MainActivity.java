@@ -42,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SwitchCompat toggle = findViewById(R.id.switch_flash);
-        lantern = new Lantern(this)
+        lantern = new Lantern(this) // pass a context
+                // setup the display controller if you want to use the display as a torch, pass activity reference
                 .setupDisplayController(MainActivity.this)
+                // OPTIONAL: Setup Lantern to observe the lifecycle of the activity/fragment, handles auto-calling cleanup() method
                 .observeLifecycle(this);
 
         // Check if torch is already enabled, update state of toggle switch
