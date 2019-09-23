@@ -53,7 +53,7 @@ public class Lantern implements LifecycleObserver {
     private final Runnable pulseRunnable = new Runnable() {
         @Override
         public void run() {
-            if(flashController!=null) {
+            if (flashController != null) {
                 enableTorchMode(!flashController.torchEnabled());
                 handler.postDelayed(pulseRunnable, pulseTime);
             }
@@ -75,37 +75,46 @@ public class Lantern implements LifecycleObserver {
     }
 
     public Lantern alwaysOnDisplay(boolean enabled) {
-        if (enabled) {
-            displayLightController.enableAlwaysOnMode();
-        } else {
-            displayLightController.disableAlwaysOnMode();
+        if (displayLightController != null) {
+            if (enabled) {
+
+                displayLightController.enableAlwaysOnMode();
+            } else {
+                displayLightController.disableAlwaysOnMode();
+            }
         }
         return this;
     }
 
     public Lantern autoBright(boolean enabled) {
-        if (enabled) {
-            displayLightController.enableAutoBrightMode();
-        } else {
-            displayLightController.disableAutoBrightMode();
+        if (displayLightController != null) {
+            if (enabled) {
+                displayLightController.enableAutoBrightMode();
+            } else {
+                displayLightController.disableAutoBrightMode();
+            }
         }
         return this;
     }
 
     public Lantern checkAndRequestSystemPermission() {
-        displayLightController.requestSystemWritePermission();
+        if (displayLightController != null) {
+            displayLightController.requestSystemWritePermission();
+        }
         return this;
     }
 
     @OnLifecycleEvent(Event.ON_DESTROY)
     public void cleanup() {
         handler.removeCallbacks(pulseRunnable);
-        displayLightController.cleanup();
+        if (displayLightController != null) {
+            displayLightController.cleanup();
+        }
         this.activityWeakRef = null;
     }
 
     public Lantern enableTorchMode(boolean enabled) {
-        if(flashController!=null) {
+        if (flashController != null) {
             if (activityWeakRef != null) {
                 if (enabled) {
                     if (!flashController.torchEnabled()
@@ -126,10 +135,12 @@ public class Lantern implements LifecycleObserver {
     }
 
     public Lantern fullBrightDisplay(boolean enabled) {
-        if (enabled) {
-            displayLightController.enableFullBrightMode();
-        } else {
-            displayLightController.disableFullBrightMode();
+        if (displayLightController != null) {
+            if (enabled) {
+                displayLightController.enableFullBrightMode();
+            } else {
+                displayLightController.disableFullBrightMode();
+            }
         }
         return this;
     }
@@ -173,18 +184,19 @@ public class Lantern implements LifecycleObserver {
 
     /**
      * Torch Enabled State
+     *
      * @return boolean
      */
     @RequiresPermission(Manifest.permission.CAMERA)
-    public boolean isTorchEnabled(){
-        if(initTorch() && flashController!=null) {
+    public boolean isTorchEnabled() {
+        if (initTorch() && flashController != null) {
             return flashController.torchEnabled();
         }
 
         return false;
     }
 
-    private Activity getActivityRef(){
+    private Activity getActivityRef() {
         return activityWeakRef.get();
     }
 }
