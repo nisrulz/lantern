@@ -53,8 +53,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation supportLibs
     testImplementation unitTestLibs
     androidTestImplementation androidTestsLibs
+
     implementation project(':lantern')
 }
