@@ -78,7 +78,7 @@ class PreMarshmallow implements FlashController {
     @Override
     public boolean torchEnabled() {
         if (camera != null && camera.getParameters() != null) {
-            return camera.getParameters().getFlashMode() == Parameters.FLASH_MODE_TORCH;
+            return camera.getParameters().getFlashMode().equals(Parameters.FLASH_MODE_TORCH);
         }
         return false;
     }
