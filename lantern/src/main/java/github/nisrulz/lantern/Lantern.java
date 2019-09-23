@@ -115,15 +115,15 @@ public class Lantern implements LifecycleObserver {
 
     public Lantern enableTorchMode(boolean enabled) {
         if (flashController != null) {
-            if (activityWeakRef != null) {
+            if (context != null) {
                 if (enabled) {
                     if (!flashController.torchEnabled()
-                            && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
+                            && utils.checkForCameraPermission(context.getApplicationContext())) {
                         flashController.on();
                     }
                 } else {
                     if (flashController.torchEnabled()
-                            && utils.checkForCameraPermission(getActivityRef().getApplicationContext())) {
+                            && utils.checkForCameraPermission(context.getApplicationContext())) {
                         flashController.off();
                     }
                 }
@@ -147,11 +147,11 @@ public class Lantern implements LifecycleObserver {
 
     @RequiresPermission(Manifest.permission.CAMERA)
     public boolean initTorch() {
-        if (activityWeakRef != null) {
-            if (utils.checkIfCameraFeatureExists(getActivityRef())
-                    && utils.checkForCameraPermission(getActivityRef())) {
+        if (context != null) {
+            if (utils.checkIfCameraFeatureExists(context)
+                    && utils.checkForCameraPermission(context)) {
                 if (isMarshmallowAndAbove()) {
-                    flashController = new PostMarshmallow(getActivityRef());
+                    flashController = new PostMarshmallow(context);
                 } else {
                     flashController = new PreMarshmallow();
                 }
