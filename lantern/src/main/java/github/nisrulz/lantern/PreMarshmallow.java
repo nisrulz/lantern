@@ -31,8 +31,8 @@ class PreMarshmallow implements FlashController {
         initCamera();
     }
 
-    private void initCamera(){
-        if (camera == null) {
+    private void initCamera() {
+        if (checkCameraId()) {
             try {
                 camera = Camera.open(getCameraId());
             } catch (RuntimeException ex) {
@@ -77,7 +77,7 @@ class PreMarshmallow implements FlashController {
 
     @Override
     public boolean torchEnabled() {
-        if(camera!=null && camera.getParameters()!=null) {
+        if (camera != null && camera.getParameters() != null) {
             return camera.getParameters().getFlashMode() == Parameters.FLASH_MODE_TORCH;
         }
         return false;
@@ -93,5 +93,14 @@ class PreMarshmallow implements FlashController {
             }
         }
         return 0;
+    }
+
+    /**
+     * Check if the camera manager returns a camera id
+     *
+     * @return boolean
+     */
+    private boolean checkCameraId() {
+        return (camera != null) && (Camera.getNumberOfCameras() > 0);
     }
 }
