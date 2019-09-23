@@ -23,7 +23,7 @@ ext {
             targetSdk               : 29,
             compileSdk              : 29,
 
-            androidGradlePlugin     : '3.4.0',
+            androidGradlePlugin     : '3.5.0',
             gradleBintrayPlugin     : '1.8.4',
             androidMavenGradlePlugin: '2.1',
 
@@ -31,10 +31,10 @@ ext {
             appcompat               : '1.0.0',
 
             junit                   : '4.12',
-            espresso                : '3.1.1',
-            testRunner              : '1.1.1',
+            espresso                : '3.2.0',
+            testRunner              : '1.2.0',
 
-            lifeycle_runtime        : '2.0.0'
+            lifeycle_runtime        : '2.1.0'
     ]
 
     junit = [junit: "junit:junit:$versions.junit"]
