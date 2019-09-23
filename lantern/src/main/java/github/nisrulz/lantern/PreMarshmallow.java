@@ -23,12 +23,11 @@ import android.hardware.Camera.Parameters;
 /**
  * The type Pre marshmallow.
  */
-@SuppressWarnings("deprecation")
 class PreMarshmallow implements FlashController {
 
     private Camera camera;
 
-    public PreMarshmallow() {
+    PreMarshmallow() {
         initCamera();
     }
 
