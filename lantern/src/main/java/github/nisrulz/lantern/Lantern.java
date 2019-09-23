@@ -60,9 +60,8 @@ public class Lantern implements LifecycleObserver {
         }
     };
 
-
-    public Lantern(Activity activity) {
-        this.activityWeakRef = new WeakReference<>(activity);
+    public Lantern(@Nullable Context context) {
+        this.context = context;
         utils = new Utils();
         handler = new Handler();
         displayLightController = new DisplayLightControllerImpl(activity);
