@@ -20,12 +20,14 @@ import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.os.Handler;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
 import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
-import android.os.Handler;
-import androidx.annotation.RequiresPermission;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
@@ -33,8 +35,13 @@ public class Lantern implements LifecycleObserver {
 
     private WeakReference<Activity> activityWeakRef;
 
-    private final DisplayLightController displayLightController;
+    @Nullable
+    private DisplayLightController displayLightController;
 
+    @Nullable
+    private final Context context;
+
+    @Nullable
     private FlashController flashController;
 
     private final Handler handler;
