@@ -64,7 +64,14 @@ public class Lantern implements LifecycleObserver {
         this.context = context;
         utils = new Utils();
         handler = new Handler();
-        displayLightController = new DisplayLightControllerImpl(activity);
+    }
+
+    public Lantern setupDisplayController(Activity activity) {
+        this.activityWeakRef = new WeakReference<>(activity);
+        if (displayLightController == null) {
+            displayLightController = new DisplayLightControllerImpl(getActivityRef());
+        }
+        return this;
     }
 
     public Lantern alwaysOnDisplay(boolean enabled) {
