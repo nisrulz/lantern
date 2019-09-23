@@ -88,7 +88,9 @@ Lantern uses a fluent api. You can enable/disable feature by calling the right m
 1. Init code.
 
     ```java
-    private Lantern lantern = new Lantern(this)
+    private Lantern lantern = new Lantern(this) // pass a context
+                                // setup the display controller if you want to use the display as a torch, pass activity reference
+                                .setupDisplayController(MainActivity.this)
                                 // Check and request for system permission, used for handling screen states
                                 .checkAndRequestSystemPermission()
                                 // OPTIONAL: Setup Lantern to observe the lifecycle of the activity/fragment, handles auto-calling cleanup() method
@@ -187,7 +189,6 @@ This project was created by [Nishant Srivastava](https://github.com/nisrulz/nisr
 
 > If you appreciate my work, consider buying me a cup of :coffee: to keep me recharged :metal:
 >  + [PayPal](https://www.paypal.me/nisrulz/5usd)
->  + Bitcoin Address: 13PjuJcfVW2Ad81fawqwLtku4bZLv1AxCL
 >
 > Donation to the project is always welcome which helps to maintain and keep [my open source projects](https://github.com/nisrulz/) up to date!
 
