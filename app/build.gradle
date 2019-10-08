@@ -15,48 +15,24 @@
  */
 
 apply plugin: 'com.android.application'
-apply from: '../dependencies.gradle'
+
+// Configs
+apply from: "$rootProject.projectDir/configs/common.gradle"
 
 android {
-    compileSdkVersion versions.compileSdk
-
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
         applicationId "nisrulz.github.lanternproject"
-        versionCode versions.appVersionCode
-        versionName versions.appVersionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 
-    lintOptions {
-        textOutput "stdout"
-        textReport true
-        checkAllWarnings true
-        warningsAsErrors true
-        showAll true
-        explainIssues true
-        abortOnError false
-        lintConfig file("$projectDir/lint.xml")
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        versionCode Versions.appCode
+        versionName Versions.appName
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation Dependencies.appCompat
+    implementation Dependencies.supportAnnotation
 
-    implementation supportLibs
-    testImplementation unitTestLibs
-    androidTestImplementation androidTestsLibs
+
 
     implementation project(':lantern')
 }

@@ -15,50 +15,22 @@
  */
 
 apply plugin: 'com.android.library'
-apply from: '../dependencies.gradle'
-apply from: '../libconfig.gradle'
+
+// Configs
+apply from: "$rootProject.projectDir/configs/common.gradle"
+apply from: "$rootProject.projectDir/configs/library.gradle"
 
 android {
-    compileSdkVersion versions.compileSdk
 
     defaultConfig {
-        minSdkVersion versions.minSdk
-        targetSdkVersion versions.targetSdk
-        versionCode libConfig.versionCode
-        versionName libConfig.versionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    lintOptions {
-        textOutput "stdout"
-        textReport true
-        checkAllWarnings true
-        warningsAsErrors true
-        showAll true
-        explainIssues true
-        abortOnError false
-        lintConfig file("$projectDir/lint.xml")
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        versionCode Versions.libraryCode
+        versionName Versions.libraryName
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation supportDeps.supportAnnotation
-    implementation lifecycle.runtime
-    // Testing
-    testImplementation unitTestLibs
-    androidTestImplementation androidTestsLibs
+    implementation Dependencies.supportAnnotation
+    implementation Dependencies.lifecycleRuntime
 }
 
 apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/publish-config.gradle'
