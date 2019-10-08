@@ -170,6 +170,11 @@ Lantern uses a fluent api. You can enable/disable feature by calling the right m
         ```java
         boolean torchEnabled = lantern.isTorchEnabled();
         ```
+1. Check if System Write permission has been granted
+
+    ```java
+    boolean isPermissionGranted = lantern.isSystemWritePermissionGranted();
+    ```
 
 # Pull Requests
 I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request. Here are some basic rules to follow to ensure timely addition of your request:
