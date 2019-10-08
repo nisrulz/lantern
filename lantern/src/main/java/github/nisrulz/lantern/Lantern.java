@@ -104,6 +104,16 @@ public class Lantern implements LifecycleObserver {
         return this;
     }
 
+    public boolean isSystemWritePermissionGranted(){
+        boolean result =false;
+
+        if (displayLightController != null) {
+            result = displayLightController.checkSystemWritePermission();
+        }
+
+        return result;
+    }
+
     @OnLifecycleEvent(Event.ON_DESTROY)
     public void cleanup() {
         handler.removeCallbacks(pulseRunnable);
