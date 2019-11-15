@@ -22,7 +22,7 @@ object Versions {
     const val targetSDK = compileSDK
 
     // Plugins
-    const val androidGradlePlugin = "3.5.1"
+    const val androidGradlePlugin = "3.6.0-beta04"
     const val bintrayPlugin = "1.8.4"
     const val androidMavenPlugin = "2.1"
 
