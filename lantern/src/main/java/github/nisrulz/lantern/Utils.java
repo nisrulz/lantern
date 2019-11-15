@@ -27,6 +27,15 @@ import android.os.Build;
 class Utils {
 
     /**
+     * Is marshmallow and above boolean.
+     *
+     * @return the boolean
+     */
+    static boolean isMarshmallowAndAbove() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    /**
      * Check for camera permission boolean.
      *
      * @param context the context
@@ -45,14 +54,5 @@ class Utils {
      */
     boolean checkIfCameraFeatureExists(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-    }
-
-    /**
-     * Is marshmallow and above boolean.
-     *
-     * @return the boolean
-     */
-    static boolean isMarshmallowAndAbove() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 }

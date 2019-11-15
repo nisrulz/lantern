@@ -22,16 +22,15 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraManager.TorchCallback;
 import android.os.Build.VERSION_CODES;
+
 import androidx.annotation.NonNull;
 
 @TargetApi(VERSION_CODES.M)
 class PostMarshmallow implements FlashController {
 
-    private String cameraId;
-
-    private boolean torchEnabledFlag = false;
-
     private final CameraManager cameraManager;
+    private String cameraId;
+    private boolean torchEnabledFlag = false;
 
     PostMarshmallow(Context context) {
         cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);

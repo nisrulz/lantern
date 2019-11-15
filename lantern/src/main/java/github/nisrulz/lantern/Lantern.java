@@ -16,40 +16,35 @@
 
 package github.nisrulz.lantern;
 
-import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
+
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
+import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
+
 public class Lantern implements LifecycleObserver {
-
-    private WeakReference<Activity> activityWeakRef;
-
-    @Nullable
-    private DisplayLightController displayLightController;
 
     @Nullable
     private final Context context;
-
+    private final Handler handler;
+    private final Utils utils;
+    private WeakReference<Activity> activityWeakRef;
+    @Nullable
+    private DisplayLightController displayLightController;
     @Nullable
     private FlashController flashController;
-
-    private final Handler handler;
-
     private long pulseTime = 1000;
-
-    private final Utils utils;
-
     private final Runnable pulseRunnable = new Runnable() {
         @Override
         public void run() {
@@ -104,8 +99,8 @@ public class Lantern implements LifecycleObserver {
         return this;
     }
 
-    public boolean isSystemWritePermissionGranted(){
-        boolean result =false;
+    public boolean isSystemWritePermissionGranted() {
+        boolean result = false;
 
         if (displayLightController != null) {
             result = displayLightController.checkSystemWritePermission();
