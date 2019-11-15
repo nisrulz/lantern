@@ -38,6 +38,6 @@ class ExampleInstrumentedTest {
     void useAppContext() {
         // Context of the app under test.
         Context appContext = ApplicationProvider.getApplicationContext();
-        assertEquals("com.github.nisrulz.sensey", appContext.getPackageName());
+        assertEquals("com.github.nisrulz.lantern", appContext.getPackageName());
     }
 }
