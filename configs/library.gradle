@@ -18,12 +18,12 @@ ext {
     libConfig = [
             versionCode     : Versions.libraryCode,
             versionName     : Versions.libraryName,
-            pomUrl          : 'https://github.com/nisrulz/lantern',
-            githubRepo      : 'nisrulz/lantern',
+            pomUrl          : LibraryConfig.libPomUrl,
+            githubRepo      : LibraryConfig.libGithubRepo,
 
-            moduleName      : 'lantern',
-            moduleDesc      : 'Android library to facilitate using camera flash as a torch and screen full bright as fallback.',
-            bintrayName     : 'com.github.nisrulz:lantern',
+            moduleName      : LibraryConfig.libModuleName,
+            moduleDesc      : LibraryConfig.libModuleDesc,
+            bintrayName     : LibraryConfig.libBintrayName,
 
             publishedGroupId: GROUP,
             developerId     : POM_DEVELOPER_ID,

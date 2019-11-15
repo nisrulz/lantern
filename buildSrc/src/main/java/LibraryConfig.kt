@@ -15,9 +15,9 @@
  */
 
 object LibraryConfig {
-    const val libPomUrl = "https://github.com/nisrulz/sensey"
-    const val libGithubRepo = "nisrulz/sensey"
-    const val libModuleName = "sensey"
-    const val libModuleDesc = "Android library which makes playing with sensor events & detecting gestures a breeze."
-    const val libBintrayName = "com.github.nisrulz:sensey"
+    const val libPomUrl = "https://github.com/nisrulz/lantern"
+    const val libGithubRepo = "nisrulz/lantern"
+    const val libModuleName = "lantern"
+    const val libModuleDesc = "Android library to facilitate using camera flash as a torch and screen full bright as fallback."
+    const val libBintrayName = "com.github.nisrulz:lantern"
 }
