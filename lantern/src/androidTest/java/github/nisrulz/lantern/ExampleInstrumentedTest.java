@@ -16,14 +16,13 @@
 
 package github.nisrulz.lantern;
 
-
 import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,9 +35,9 @@ import static org.junit.Assert.assertEquals;
 class ExampleInstrumentedTest {
 
     @Test
-    void useAppContext() {
+    void testContext() {
         // Context of the app under test.
-        Context appContext = ApplicationProvider.getApplicationContext();
-        assertEquals("com.github.nisrulz.lantern", appContext.getPackageName());
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("github.nisrulz.lantern", context.getPackageName());
     }
 }
