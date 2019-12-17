@@ -21,7 +21,6 @@ apply from: "$rootProject.projectDir/configs/common.gradle"
 apply from: "$rootProject.projectDir/configs/library.gradle"
 
 android {
-
     defaultConfig {
         versionCode Versions.libraryCode
         versionName Versions.libraryName
