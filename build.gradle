@@ -44,3 +44,13 @@ allprojects {
         jcenter()
     }
 }
+
+subprojects {
+    // Only apply application plugin to app module
+    if (project.name == "app") {
+        apply plugin: 'com.android.application'
+    } else {
+        // For everything else, apply library plugin
+        apply plugin: 'com.android.library'
+    }
+}
