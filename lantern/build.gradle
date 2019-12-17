@@ -18,16 +18,8 @@
 apply from: "$rootProject.projectDir/configs/common.gradle"
 apply from: "$rootProject.projectDir/configs/library.gradle"
 
-android {
-    defaultConfig {
-        versionCode Versions.libraryCode
-        versionName Versions.libraryName
-    }
-}
-
 dependencies {
     implementation Dependencies.annotation
     implementation Dependencies.lifecycleRuntime
 }
 
-apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/publish-config.gradle'

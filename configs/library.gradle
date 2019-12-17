@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+android {
+    defaultConfig {
+        versionCode Versions.libraryCode
+        versionName Versions.libraryName
+    }
+}
+
 ext {
     libConfig = [
             versionCode     : Versions.libraryCode,
@@ -52,3 +59,5 @@ ext {
     libModuleDesc = LibraryConfig.libModuleDesc
     libBintrayName = LibraryConfig.libBintrayName
 }
+
+apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/publish-config.gradle'
