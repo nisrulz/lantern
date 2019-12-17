@@ -53,8 +53,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     // Testing
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.androidJunitExt
