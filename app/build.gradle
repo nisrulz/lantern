@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation Dependencies.appCompat
-    implementation Dependencies.supportAnnotation
+    implementation Dependencies.annotation
 
     implementation project(':lantern')
 }

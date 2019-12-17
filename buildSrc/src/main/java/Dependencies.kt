@@ -30,7 +30,7 @@ object Dependencies {
     // Support Library
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val supportCore = "androidx.core:core:${Versions.support}"
-    const val supportAnnotation = "androidx.annotation:annotation:${Versions.support}"
+    const val annotation = "androidx.annotation:annotation:${Versions.support}"
 
     // Architecture Components
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime:${Versions.lifecycleRuntime}"
