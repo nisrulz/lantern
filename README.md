@@ -192,9 +192,6 @@ Licensed under the Apache License, Version 2.0, [click here for the full license
 ## Author & support
 This project was created by [Nishant Srivastava](https://github.com/nisrulz/nisrulz.github.io#nishant-srivastava) but hopefully developed and maintained by many others. See the [the list of contributors here](https://github.com/nisrulz/lantern/graphs/contributors).
 
-> If you appreciate my work, consider buying me a cup of :coffee: to keep me recharged :metal:
->  + [PayPal](https://www.paypal.me/nisrulz/5usd)
->
-> Donation to the project is always welcome which helps to maintain and keep [my open source projects](https://github.com/nisrulz/) up to date!
+If you appreciate my work, consider [buying me](https://www.paypal.me/nisrulz/5usd) a cup of :coffee: to keep me recharged :metal: [[PayPal](https://www.paypal.me/nisrulz/5usd)]
 
 <img src="http://forthebadge.com/images/badges/built-for-android.svg" />
