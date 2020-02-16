@@ -21,14 +21,13 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.concurrent.TimeUnit;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
-
-import java.util.concurrent.TimeUnit;
-
 import github.nisrulz.lantern.Lantern;
 
 public class MainActivity extends AppCompatActivity {

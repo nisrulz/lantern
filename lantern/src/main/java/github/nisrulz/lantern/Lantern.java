@@ -21,15 +21,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 
+import java.lang.ref.WeakReference;
+import java.util.concurrent.TimeUnit;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
-
-import java.lang.ref.WeakReference;
-import java.util.concurrent.TimeUnit;
 
 import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 

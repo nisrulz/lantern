@@ -20,12 +20,6 @@
 
 
     <!-- Permissions : Allows access to flashlight -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-
-    <!-- Permissions : Allows access to change settings -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
@@ -43,5 +37,11 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <!-- Permissions : Allows access to change settings -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
