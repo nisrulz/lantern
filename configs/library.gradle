@@ -18,6 +18,8 @@ android {
     defaultConfig {
         versionCode Versions.libraryCode
         versionName Versions.libraryName
+
+        consumerProguardFiles 'consumer-rules.pro'
     }
 }
 
