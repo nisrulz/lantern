@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.nisrulz.lanternproject;
+package com.github.nisrulz.lanternproject;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
-import github.nisrulz.lantern.Lantern;
+import com.github.nisrulz.lantern.Lantern;
 
 public class MainActivity extends AppCompatActivity {
 

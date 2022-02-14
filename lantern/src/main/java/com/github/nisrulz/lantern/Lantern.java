@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.nisrulz.lantern;
+package com.github.nisrulz.lantern;
 
 import android.Manifest;
 import android.app.Activity;
@@ -31,7 +31,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
+import static com.github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 public class Lantern implements LifecycleObserver {
 

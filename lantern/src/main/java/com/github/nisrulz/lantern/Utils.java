@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.nisrulz.lantern;
+package com.github.nisrulz.lantern;
 
 import android.Manifest;
 import android.content.Context;

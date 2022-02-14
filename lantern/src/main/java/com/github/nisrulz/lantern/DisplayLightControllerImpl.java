@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.nisrulz.lantern;
+package com.github.nisrulz.lantern;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,7 +26,7 @@ import android.view.WindowManager;
 
 import java.lang.ref.WeakReference;
 
-import static github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
+import static com.github.nisrulz.lantern.Utils.isMarshmallowAndAbove;
 
 class DisplayLightControllerImpl implements DisplayLightController {
 

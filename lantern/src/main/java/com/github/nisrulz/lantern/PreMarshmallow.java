@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package github.nisrulz.lantern;
+package com.github.nisrulz.lantern;
 
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;

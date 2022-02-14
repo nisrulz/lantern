@@ -15,7 +15,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="github.nisrulz.lantern">
+    package="com.github.nisrulz.lantern">
 
     <uses-feature
         android:name="android.hardware.camera.autofocus"
