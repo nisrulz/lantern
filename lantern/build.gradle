@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
     compileOnly "androidx.annotation:annotation:$annotation"
 
 }
