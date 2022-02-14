@@ -22,16 +22,17 @@ import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraManager.TorchCallback
 import android.os.Build.VERSION_CODES
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 
 @TargetApi(VERSION_CODES.M)
 internal class PostMarshmallow(context: Context) : FlashController {
-    private val cameraManager: CameraManager?
-    private var cameraId: String? = null
+    private val cameraManager: CameraManager by lazy { context.getSystemService(Context.CAMERA_SERVICE) as CameraManager }
+    private val cameraId: String by lazy { cameraManager.cameraIdList.first() }
     private var torchEnabledFlag = false
     override fun off() {
         try {
             if (checkCameraId()) {
-                cameraManager?.setTorchMode(cameraId, false)
+                cameraManager.setTorchMode(cameraId, false)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -41,7 +42,7 @@ internal class PostMarshmallow(context: Context) : FlashController {
     override fun on() {
         try {
             if (checkCameraId()) {
-                cameraManager?.setTorchMode(cameraId?, true)
+                cameraManager.setTorchMode(cameraId, true)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -57,20 +58,18 @@ internal class PostMarshmallow(context: Context) : FlashController {
      *
      * @return boolean
      */
+    @RequiresApi(VERSION_CODES.LOLLIPOP)
     private fun checkCameraId(): Boolean {
         return try {
-            cameraManager != null && cameraManager.cameraIdList.size > 0
+            cameraManager.cameraIdList.isNotEmpty()
         } catch (e: CameraAccessException) {
             false
         }
     }
 
     init {
-        cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
         try {
             if (checkCameraId()) {
-                assert(cameraManager != null)
-                cameraId = cameraManager?.cameraIdList[0]
                 cameraManager.registerTorchCallback(object : TorchCallback() {
                     override fun onTorchModeUnavailable(@NonNull cameraIdentifier: String) {
                         torchEnabledFlag = false

@@ -16,8 +16,11 @@
 package com.github.nisrulz.lantern
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.os.Handler
+import androidx.annotation.Nullable
+import androidx.annotation.RequiresPermission
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -25,9 +28,9 @@ import androidx.lifecycle.OnLifecycleEvent
 import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
-class Lantern(@field:Nullable @param:Nullable private val context: Context?) : LifecycleObserver {
-    private val handler: Handler
-    private val utils: Utils
+class Lantern(private val context: Context?) : LifecycleObserver {
+    private val handler: Handler = Handler()
+    private val utils: Utils = Utils()
     private var activityWeakRef: WeakReference<Activity>? = null
 
     @Nullable
@@ -39,7 +42,7 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
     private val pulseRunnable: Runnable = object : Runnable {
         override fun run() {
             if (flashController != null) {
-                enableTorchMode(!flashController!!.torchEnabled())
+                enableTorchMode(flashController?.torchEnabled()?.not() == true)
                 handler.postDelayed(this, pulseTime)
             }
         }
@@ -47,18 +50,22 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
 
     fun setupDisplayController(activity: Activity): Lantern {
         activityWeakRef = WeakReference<Activity>(activity)
-        if (displayLightController == null) {
-            displayLightController = DisplayLightControllerImpl(activityRef)
+
+        activityRef?.let {
+            if (displayLightController == null) {
+                displayLightController = DisplayLightControllerImpl(it)
+            }
         }
+
         return this
     }
 
     fun alwaysOnDisplay(enabled: Boolean): Lantern {
         if (displayLightController != null) {
             if (enabled) {
-                displayLightController!!.enableAlwaysOnMode()
+                displayLightController?.enableAlwaysOnMode()
             } else {
-                displayLightController!!.disableAlwaysOnMode()
+                displayLightController?.disableAlwaysOnMode()
             }
         }
         return this
@@ -67,9 +74,9 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
     fun autoBright(enabled: Boolean): Lantern {
         if (displayLightController != null) {
             if (enabled) {
-                displayLightController!!.enableAutoBrightMode()
+                displayLightController?.enableAutoBrightMode()
             } else {
-                displayLightController!!.disableAutoBrightMode()
+                displayLightController?.disableAutoBrightMode()
             }
         }
         return this
@@ -77,7 +84,7 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
 
     fun checkAndRequestSystemPermission(): Lantern {
         if (displayLightController != null) {
-            displayLightController!!.requestSystemWritePermission()
+            displayLightController?.requestSystemWritePermission()
         }
         return this
     }
@@ -86,7 +93,7 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
         get() {
             var result = false
             if (displayLightController != null) {
-                result = displayLightController!!.checkSystemWritePermission()
+                result = displayLightController?.checkSystemWritePermission() == true
             }
             return result
         }
@@ -95,7 +102,7 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
     fun cleanup() {
         handler.removeCallbacks(pulseRunnable)
         if (displayLightController != null) {
-            displayLightController!!.cleanup()
+            displayLightController?.cleanup()
         }
         activityWeakRef = null
     }
@@ -104,20 +111,20 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
         if (flashController != null) {
             if (context != null) {
                 if (enabled) {
-                    if (!flashController!!.torchEnabled()
+                    if (flashController?.torchEnabled()?.not() == true
                         && utils.checkForCameraPermission(context.applicationContext)
                     ) {
-                        flashController!!.on()
+                        flashController?.on()
                     }
                 } else {
-                    if (flashController!!.torchEnabled()
+                    if (flashController?.torchEnabled() == true
                         && utils.checkForCameraPermission(context.applicationContext)
                     ) {
-                        flashController!!.off()
+                        flashController?.off()
                     }
                 }
             } else {
-                flashController!!.off()
+                flashController?.off()
             }
         }
         return this
@@ -126,9 +133,9 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
     fun fullBrightDisplay(enabled: Boolean): Lantern {
         if (displayLightController != null) {
             if (enabled) {
-                displayLightController!!.enableFullBrightMode()
+                displayLightController?.enableFullBrightMode()
             } else {
-                displayLightController!!.disableFullBrightMode()
+                displayLightController?.disableFullBrightMode()
             }
         }
         return this
@@ -140,7 +147,7 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
             if (utils.checkIfCameraFeatureExists(context)
                 && utils.checkForCameraPermission(context)
             ) {
-                flashController = if (Utils.isMarshmallowAndAbove()) {
+                flashController = if (Utils.isMarshmallowAndAbove) {
                     PostMarshmallow(context)
                 } else {
                     PreMarshmallow()
@@ -179,13 +186,8 @@ class Lantern(@field:Nullable @param:Nullable private val context: Context?) : L
     @get:RequiresPermission(Manifest.permission.CAMERA)
     val isTorchEnabled: Boolean
         get() = if (initTorch() && flashController != null) {
-            flashController!!.torchEnabled()
+            flashController?.torchEnabled() ?: false
         } else false
     private val activityRef: Activity?
-        private get() = activityWeakRef!!.get()
-
-    init {
-        utils = Utils()
-        handler = Handler()
-    }
+        get() = activityWeakRef?.get()
 }

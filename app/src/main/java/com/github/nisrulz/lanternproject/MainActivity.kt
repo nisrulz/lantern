@@ -23,53 +23,68 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import com.github.nisrulz.lantern.Lantern
+import com.github.nisrulz.lanternproject.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE = 100
-    private var lantern: Lantern? = null
+
+    private val lantern by lazy {
+        Lantern(this) // pass a context
+            // setup the display controller if you want to use the display as a torch,
+            // pass activity reference
+            .setupDisplayController(this@MainActivity)
+            // OPTIONAL: Setup Lantern to observe the lifecycle of the activity/fragment,
+            // handles auto-calling cleanup() method
+            .observeLifecycle(this)
+    }
+
+    private lateinit var binding: ActivityMainBinding
 
     // Runtime Permission is being handled and checked against internally by Lantern
     @SuppressLint("MissingPermission")
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val toggle = findViewById<SwitchCompat>(R.id.switch_flash)
-        lantern = Lantern(this) // pass a context
-            // setup the display controller if you want to use the display as a torch, pass activity reference
-            .setupDisplayController(this@MainActivity) // OPTIONAL: Setup Lantern to observe the lifecycle of the activity/fragment, handles auto-calling cleanup() method
-            .observeLifecycle(this)
-
-        // Check if torch is already enabled, update state of toggle switch
-        toggle.isChecked = lantern.isTorchEnabled()
-
-        // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
-        // In case permission is not granted, request for the permission and retry by calling `init()` method
-        // NOTE: In case camera feature is does not exist, `init()` will return `false` and Lantern will not have
-        // torch functionality but only screen based features
-        if (!lantern.initTorch()) {
-            // Request if permission is not granted
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                REQUEST_CODE
-            )
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.apply {
+            setContentView(root)
+            setupUi(this)
         }
-        toggle.setOnCheckedChangeListener { compoundButton: CompoundButton?, state: Boolean ->
-            if (state) {
-                // true
-                lantern.alwaysOnDisplay(true)
-                    .fullBrightDisplay(true)
-                    .enableTorchMode(true)
-                    .pulse(true).withDelay(1, TimeUnit.SECONDS)
-            } else {
-                //false
-                lantern.alwaysOnDisplay(false)
-                    .fullBrightDisplay(false)
-                    .enableTorchMode(false).pulse(false)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun setupUi(binding: ActivityMainBinding) {
+        binding.apply {
+            // Check if torch is already enabled, update state of toggle switch
+            switchFlash.isChecked = lantern.isTorchEnabled
+
+            // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
+            // In case permission is not granted, request for the permission and retry by calling `init()` method
+            // NOTE: In case camera feature is does not exist, `init()` will return `false` and Lantern will not have
+            // torch functionality but only screen based features
+            if (!lantern.initTorch()) {
+                // Request if permission is not granted
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_CODE
+                )
+            }
+            switchFlash.setOnCheckedChangeListener { compoundButton: CompoundButton?, state: Boolean ->
+                if (state) {
+                    // true
+                    lantern.alwaysOnDisplay(true)
+                        .fullBrightDisplay(true)
+                        .enableTorchMode(true)
+                        .pulse(true).withDelay(1, TimeUnit.SECONDS)
+                } else {
+                    //false
+                    lantern.alwaysOnDisplay(false)
+                        .fullBrightDisplay(false)
+                        .enableTorchMode(false).pulse(false)
+                }
             }
         }
     }
@@ -81,7 +96,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE) {
-            if (!lantern!!.initTorch()) {
+            if (!lantern.initTorch()) {
                 Toast.makeText(this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show()
             }
         }

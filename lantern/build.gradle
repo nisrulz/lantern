@@ -43,6 +43,6 @@ android {
 
 dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle"
-    compileOnly "androidx.annotation:annotation:$annotation"
+    implementation "androidx.annotation:annotation:$annotation"
 
 }
