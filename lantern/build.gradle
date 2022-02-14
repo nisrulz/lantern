@@ -14,12 +14,35 @@
  * limitations under the License.
  */
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: "com.vanniktech.maven.publish"
 
-// Configs
-apply from: "$rootProject.projectDir/configs/common.gradle"
-apply from: "$rootProject.projectDir/configs/library.gradle"
+android {
+    compileSdk rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+
+        versionCode rootProject.ext.libVersionCode
+        versionName rootProject.ext.libVersionName
+        consumerProguardFiles 'consumer-proguard-rules.pro'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
-    implementation Dependencies.annotation
-    implementation Dependencies.lifecycleRuntime
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle"
+    compileOnly "androidx.annotation:annotation:$annotation"
+
 }

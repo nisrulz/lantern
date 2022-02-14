@@ -20,27 +20,36 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath Plugins.android
+        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
 
-        // Publish to Jcenter/Bintray
-        classpath Plugins.bintray
-        classpath Plugins.androidMaven
-
-        // Kotlin Plugin
-        classpath Plugins.kotlin
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // Deps
+    appCompat = "1.4.1"
+    annotation = "1.0.0"
+    lifecycle = "2.4.0"
+
+    //Other
+    targetSdkVersion = 32
+    minSdkVersion = 14
+    compileSdkVersion = targetSdkVersion
+
+    // Library Info
+    libVersionCode = 8
+    libVersionName = '2.2.0'
 }
