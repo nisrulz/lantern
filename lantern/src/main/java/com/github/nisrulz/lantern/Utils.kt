@@ -13,37 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.nisrulz.lantern
 
-package com.github.nisrulz.lantern;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.os.Build;
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 
 /**
  * The type Utils.
  */
-class Utils {
-
-    /**
-     * Is marshmallow and above boolean.
-     *
-     * @return the boolean
-     */
-    static boolean isMarshmallowAndAbove() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
-
+internal class Utils {
     /**
      * Check for camera permission boolean.
      *
      * @param context the context
      * @return the boolean
      */
-    boolean checkForCameraPermission(Context context) {
-        return context.checkCallingOrSelfPermission(Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED;
+    fun checkForCameraPermission(context: Context): Boolean {
+        return (context.checkCallingOrSelfPermission(Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED)
     }
 
     /**
@@ -52,7 +41,17 @@ class Utils {
      * @param context the context
      * @return the boolean
      */
-    boolean checkIfCameraFeatureExists(Context context) {
-        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    fun checkIfCameraFeatureExists(context: Context): Boolean {
+        return context.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)
+    }
+
+    companion object {
+        /**
+         * Is marshmallow and above boolean.
+         *
+         * @return the boolean
+         */
+        val isMarshmallowAndAbove: Boolean
+            get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
     }
 }

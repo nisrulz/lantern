@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.nisrulz.lantern
 
-package com.github.nisrulz.lantern;
-
-interface FlashController {
-
-    void off();
-
-    void on();
-
-    boolean torchEnabled();
+internal interface DisplayLightController {
+    fun checkSystemWritePermission(): Boolean
+    fun cleanup()
+    fun disableAlwaysOnMode()
+    fun disableAutoBrightMode()
+    fun disableFullBrightMode()
+    fun enableAlwaysOnMode()
+    fun enableAutoBrightMode()
+    fun enableFullBrightMode()
+    fun requestSystemWritePermission()
 }
