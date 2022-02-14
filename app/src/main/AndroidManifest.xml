@@ -15,21 +15,20 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="github.nisrulz.lanternproject">
 
 
     <!-- Permissions : Allows access to flashlight -->
     <application
         android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="github.nisrulz.lanternproject.MainActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="github.nisrulz.lanternproject.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,11 +36,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-
-    <!-- Permissions : Allows access to change settings -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

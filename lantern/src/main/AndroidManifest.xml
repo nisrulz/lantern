@@ -17,7 +17,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="github.nisrulz.lantern">
 
-    <application />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
@@ -25,4 +24,10 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
+    <!-- Permissions : Allows access to change settings -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>
