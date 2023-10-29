@@ -13,9 +13,6 @@ Handling device flash as torch for Android.
 - 📕 Usage Docs (at) https://nisrulz.com/lantern/
 
 - [Changelog](Changelog.md)
-- Screenshot of Sample App
-
-    <img src=img/sc_1.png height=480 />
 
 - Pull Requests
 
