@@ -18,26 +18,33 @@ apply plugin: 'kotlin-android'
 apply plugin: "com.vanniktech.maven.publish"
 
 android {
+    namespace 'com.github.nisrulz.lantern'
+
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdkVersion
 
-        versionCode rootProject.ext.libVersionCode
-        versionName rootProject.ext.libVersionName
         consumerProguardFiles 'consumer-proguard-rules.pro'
     }
 
     buildTypes {
         debug {
             minifyEnabled false
-            debuggable true
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 

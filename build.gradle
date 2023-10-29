@@ -24,8 +24,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+        classpath 'com.android.tools.build:gradle:8.1.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
 
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
 
@@ -34,19 +34,19 @@ buildscript {
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+tasks.register('clean', Delete) {
+    delete rootProject.getLayout().getBuildDirectory()
 }
 
 ext {
     // Deps
-    appCompat = "1.4.1"
-    annotation = "1.3.0"
-    lifecycle = "2.4.1"
+    appCompat = "1.6.1"
+    annotation = "1.7.0"
+    lifecycle = "2.6.2"
 
     //Other
-    targetSdkVersion = 32
-    minSdkVersion = 14
+    targetSdkVersion = 34
+    minSdkVersion = 19
     compileSdkVersion = targetSdkVersion
 
     // Library Info
