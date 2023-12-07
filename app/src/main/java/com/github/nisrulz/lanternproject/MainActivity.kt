@@ -18,7 +18,6 @@ package com.github.nisrulz.lanternproject
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
@@ -30,6 +29,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE = 100
+    private var isOn = true
 
     private val lantern by lazy {
         Lantern(this) // pass a context
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingPermission")
     private fun setupUi(binding: ActivityMainBinding) {
         binding.apply {
-            // Check if torch is already enabled, update state of toggle switch
-            switchFlash.isChecked = lantern.isTorchEnabled
+            // Check if torch is already enabled, update state of button
+            setForState(this, isOn)
 
             // Init Lantern by calling `init()`, which also check if camera permission is granted + camera feature exists
             // In case permission is not granted, request for the permission and retry by calling `init()` method
@@ -72,8 +72,11 @@ class MainActivity : AppCompatActivity() {
                     REQUEST_CODE
                 )
             }
-            switchFlash.setOnCheckedChangeListener { compoundButton: CompoundButton?, state: Boolean ->
-                if (state) {
+            imgBtn.setOnClickListener {
+                isOn = !isOn
+                setForState(this, isOn)
+
+                if (!isOn) {
                     // true
                     lantern.alwaysOnDisplay(true)
                         .fullBrightDisplay(true)
@@ -85,6 +88,8 @@ class MainActivity : AppCompatActivity() {
                         .fullBrightDisplay(false)
                         .enableTorchMode(false).pulse(false)
                 }
+
+
             }
         }
     }
@@ -100,5 +105,18 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Camera Permission Denied!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun setForState(binding: ActivityMainBinding, enabled: Boolean) {
+        with(binding) {
+            if (enabled) {
+                imgBtn.setDrawable(R.drawable.on, applicationContext)
+                rootLayout.setBgColor(android.R.color.white, applicationContext)
+            } else {
+                imgBtn.setDrawable(R.drawable.off, applicationContext)
+                rootLayout.setBgColor(R.color.colorAccent, applicationContext)
+            }
+        }
+
     }
 }

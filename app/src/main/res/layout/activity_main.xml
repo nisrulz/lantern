@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:background="@color/colorAccent"
+    android:gravity="right"
+    android:id="@+id/rootLayout"
+    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded">
 
-    <TextView
+    <ImageButton
+        android:id="@+id/imgBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/off" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/on" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_flash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/off"
+        android:importantForAccessibility="no" />
 </LinearLayout>
