@@ -1,0 +1,65 @@
+# Project information
+site_name: 'Lantern'
+site_description: 'Handling device flash as torch for Android.'
+site_author: '2017 Nishant Srivastava'
+site_url: 'https://nisrulz.com/lantern/'
+remote_branch: gh-pages
+edit_uri: ""
+
+# Github Info
+repo_name: 'nisrulz/lantern'
+repo_url: 'https://github.com/nisrulz/lantern'
+
+# Copyright
+copyright: 'Copyright &copy; 2017 Nishant Srivastava'
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  favicon: 'img/favicon.ico'
+  logo: 'img/logo.png'
+  icon:
+    repo: 'fontawesome/brands/github'
+  palette:
+    primary: 'deep purple'
+    accent: 'white'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+# Navigation
+nav:
+  - 'Overview': index.md
+  - 'Integration': integration.md
+  - 'Usage': usage.md
+  - 'API ⏏': api/index.html
+  - 'Change Log': changelog.md
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+# Plugins
+plugins:
+  - search
+
+# Extras
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/nisrulz
+    - icon: fontawesome/brands/github
+      link: https://github.com/nisrulz
+
+# Built with https://github.com/squidfunk/mkdocs-material

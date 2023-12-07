@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply from: "${rootDir}/jvm_compat.gradle"
 
 android {
     namespace 'com.github.nisrulz.lanternproject'
-
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -43,19 +46,9 @@ android {
     }
 
     buildFeatures { viewBinding true }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation "androidx.appcompat:appcompat:$appCompat"
     implementation "androidx.annotation:annotation:$annotation"
 

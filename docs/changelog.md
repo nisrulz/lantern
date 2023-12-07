@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.0.0 [x Feb 2022]
+## 3.0.0 [7 Dec 2023]
 
 - ✅  Switched to Kotlin
 - 🧹  Reworked API

@@ -1,13 +1,3 @@
-# Docs
-
-
-# Including in your project
-Lantern is available in the Jcenter, so getting it as simple as adding it as a dependency
-```gradle
-implementation "com.github.nisrulz:lantern:{latest version}"
-```
-where `{latest version}` corresponds to published version in [ ![Download](https://api.bintray.com/packages/nisrulz/maven/com.github.nisrulz%3Alantern/images/download.svg) ](https://bintray.com/nisrulz/maven/com.github.nisrulz%3Alantern/_latestVersion)
-
 # Usage
 
 Lantern uses a fluent api. You can enable/disable feature by calling the right method on the Lantern object. Use what you need!
@@ -71,45 +61,45 @@ Lantern uses a fluent api. You can enable/disable feature by calling the right m
     ```
 1. Manage states via
 
-    + Turn On
+   + Turn On
 
-        ```java
-        lantern
-            // Enable always on display
-            .alwaysOnDisplay(true)
-            // Set screen to full bright
-            .fullBrightDisplay(true)
-            // Or set screen to Auto Bright
-            .autoBright(true)
-            // Enable torch via flash
-            .enableTorchMode(true)
-            // Enable pulsating torch
-            .pulse(true)
-            // Set the delay for between each pulse
-            .withDelay(1, TimeUnit.SECONDS);
-        ```
-    + Turn Off
+       ```java
+       lantern
+           // Enable always on display
+           .alwaysOnDisplay(true)
+           // Set screen to full bright
+           .fullBrightDisplay(true)
+           // Or set screen to Auto Bright
+           .autoBright(true)
+           // Enable torch via flash
+           .enableTorchMode(true)
+           // Enable pulsating torch
+           .pulse(true)
+           // Set the delay for between each pulse
+           .withDelay(1, TimeUnit.SECONDS);
+       ```
+   + Turn Off
 
-        ```java
-        lantern
-            // Disable always on display
-            .alwaysOnDisplay(false)
-            // Unset full bright screen state
-            .fullBrightDisplay(false)
-            // Or unset screen from Auto Bright
-            .autoBright(false)
-            // Disable torch via flash
-            .enableTorchMode(false)
-            // Disable pulsating torch
-            .pulse(false);
-        ```
-    + Query enabled state of the torch i.e., flashlight
+       ```java
+       lantern
+           // Disable always on display
+           .alwaysOnDisplay(false)
+           // Unset full bright screen state
+           .fullBrightDisplay(false)
+           // Or unset screen from Auto Bright
+           .autoBright(false)
+           // Disable torch via flash
+           .enableTorchMode(false)
+           // Disable pulsating torch
+           .pulse(false);
+       ```
+   + Query enabled state of the torch i.e., flashlight
 
-        ```java
-        boolean torchEnabled = lantern.isTorchEnabled();
-        ```
-    + Check if System Write permission has been granted
+       ```java
+       boolean torchEnabled = lantern.isTorchEnabled();
+       ```
+   + Check if System Write permission has been granted
 
-        ```java
-        boolean isPermissionGranted = lantern.isSystemWritePermissionGranted();
-        ```
+       ```java
+       boolean isPermissionGranted = lantern.isSystemWritePermissionGranted();
+       ```

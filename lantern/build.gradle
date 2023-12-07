@@ -13,38 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: "com.vanniktech.maven.publish"
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'com.vanniktech.maven.publish'
+}
+
+apply from: "${rootDir}/docs.gradle"
+apply from: "${rootDir}/jvm_compat.gradle"
 
 android {
     namespace 'com.github.nisrulz.lantern'
-
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
         minSdk rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdkVersion
 
+        versionCode rootProject.ext.libVersionCode
+        versionName rootProject.ext.libVersionName
         consumerProguardFiles 'consumer-proguard-rules.pro'
     }
 
     buildTypes {
         debug {
             minifyEnabled false
+            debuggable true
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 }
 

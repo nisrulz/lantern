@@ -1,4 +1,4 @@
-![Image](img/github_banner.png)
+![Image](docs/img/github_banner.png)
 
 <center>
 
@@ -12,7 +12,7 @@ Handling device flash as torch for Android.
 
 - 📕 Usage Docs (at) https://nisrulz.com/lantern/
 
-- [Changelog](Changelog.md)
+- [Changelog](docs/changelog.md)
 
 - Pull Requests
 

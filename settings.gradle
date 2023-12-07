@@ -1,5 +1,16 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    // Change default libraries extension name
+    defaultLibrariesExtensionName.set("deps")
+
     repositories {
         google()
         mavenLocal()
@@ -7,7 +18,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = 'Lantern'
+rootProject.name = 'Lantern Project'
 
 include ':app'
 include ':lantern'
